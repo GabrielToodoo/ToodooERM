@@ -1,0 +1,18 @@
+{
+  "name": "toodoo-erm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/GabrielToodoo/ToodooERM.git",
+  "author": "GabrielAtlas <joaogabrielcosta13@icloud.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sass --watch www/styles/sass/styles.scss:www/styles/css/styles.css --style compressed"
+  },
+  "devDependencies": {
+    "sass": "^1.55.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "5.2.1"
+  }
+}
