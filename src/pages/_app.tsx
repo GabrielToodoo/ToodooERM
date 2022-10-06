@@ -16,9 +16,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <SSRProvider>
       <ThemeProvider theme={theme}>
-        {/* <Component {...pageProps} /> */}
         <AuthProvider>
-          <SignIn />
+          {/*<SignIn /> */}
+          <Component {...pageProps} />
           <GlobalStyle />
         </AuthProvider>
       </ThemeProvider>
