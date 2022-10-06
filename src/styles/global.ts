@@ -1,5 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+import { createGlobalStyle } from 'styled-components'
+
+import theme from './theme'
+
+export default createGlobalStyle`
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
+
+body {
+  background: #e5e5e5;
+}
 
 body,
 input {
@@ -63,3 +77,13 @@ h6 {
   font-size: 18px;
   line-height: 24px;
 }
+
+a {
+  text-decoration: none;
+}
+
+.text-muted {
+  color: ${theme.colors.gray500}
+}
+
+`
