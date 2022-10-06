@@ -1,21 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+import { useForm } from 'react-hook-form'
+
+import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import {
   Container,
-  Background,
   FormLogin,
   FormContainer,
-  Description,
   HelpText
-} from './styles'
+} from '././../styles/pages/login'
+import AuthBackground from '../components/AuthBackground'
+import Button from '../components/Button'
+import Input from '../components/Input'
 
-import type { NextPage } from 'next'
-import Input from '../../../components/Input'
-import Button from '../../../components/Button'
+interface IFormData {
+  email: string
+  password: string
+  remember: boolean
+}
 
 const SignIn: NextPage = () => {
+  const [loading, setLoading] = useState(false)
+
+  const { register, handleSubmit } = useForm()
+
+  function handleLogin(data: IFormData) {
+    console.log(data)
+    setLoading(true)
+  }
+
   return (
     <>
       <Head>
@@ -24,18 +39,20 @@ const SignIn: NextPage = () => {
 
       <main>
         <Container>
-          <Background className="d-none d-lg-flex">
-            <img
-              src="/images/login-illustration.svg"
-              alt="Login Illustration"
-              width="483"
-              height="532"
-            />
-            <Description>
-              <h3>Gerencie sua empresa em uma única plataforma</h3>
-              <p>Conheça o Toodoo ERM.</p>
-            </Description>
-          </Background>
+          <AuthBackground
+            description={{
+              title: 'Gerencie sua empresa em uma única plataforma',
+              subtitle: 'Conheça o Toodoo ERM.'
+            }}
+            image={
+              <img
+                src="/images/login-illustration.svg"
+                alt="Login Illustration"
+                width="483"
+                height="532"
+              />
+            }
+          />
           <FormLogin>
             <FormContainer className="mx-lg-100">
               <div className="w-100">
@@ -46,31 +63,31 @@ const SignIn: NextPage = () => {
                   alt="Toodoo Logo"
                 />
               </div>
-              <form>
+              <form onSubmit={handleSubmit(handleLogin)}>
                 <p>Seja bem-vindo!</p>
                 <h2 className="mb-4">Faça login na sua conta</h2>
                 <Input
                   label="Email*"
-                  name="email"
                   type="email"
                   placeholder="ex. johndoe@toodoo.com.br"
                   className="mb-3"
+                  registerFunction={register('email')}
                 />
                 <Input
                   label="Senha*"
-                  name="senha"
                   type="password"
-                  placeholder="ex. johndoe@toodoo.com.br"
+                  placeholder="ao menos 8 caracteres"
                   className="mb-3"
+                  registerFunction={register('password')}
                 />
 
                 <div className="d-flex align-items-center mt-4 mb-4 justify-content-between">
                   <div className="form-group form-check">
                     <input
-                      name="remember"
                       type="checkbox"
                       id="remember"
                       className={`form-check-input rounded-circle`}
+                      {...register('remember')}
                     />
                     <label
                       htmlFor="remember"
@@ -84,7 +101,9 @@ const SignIn: NextPage = () => {
                   </a>
                 </div>
 
-                <Button disabled>Entrar</Button>
+                <Button onClick={handleLogin} loading={loading}>
+                  Entrar
+                </Button>
               </form>
               <HelpText>
                 Precisa de ajuda? <a href="#">Entre em contato.</a>

@@ -5,6 +5,9 @@ import { shade } from 'polished'
 import theme from '../../styles/theme'
 
 export const ButtonContainer = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px 151px;
   border-radius: 5px;
   background: ${theme.colors.primary400};
