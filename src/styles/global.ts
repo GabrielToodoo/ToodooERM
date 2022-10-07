@@ -86,4 +86,20 @@ a {
   color: ${theme.colors.gray500}
 }
 
+.modal-header {
+  border-bottom: none !important;
+}
+
+.modal-content {
+  border: none;
+}
+
+.modal-error-title {
+  color: ${theme.colors.colorError}
+}
+
+.modal-toodoo-container {
+  text-align: center;
+}
+
 `

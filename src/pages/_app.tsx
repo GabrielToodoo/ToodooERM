@@ -9,17 +9,19 @@ import type { AppProps } from 'next/app'
 import GlobalStyle from '../styles/global'
 
 import theme from '../styles/theme'
-import SignIn from './login'
 import { AuthProvider } from '../contexts/AuthContext'
+import { ModalProvider } from '../contexts/ModalContext'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <SSRProvider>
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          {/*<SignIn /> */}
-          <Component {...pageProps} />
-          <GlobalStyle />
+          <ModalProvider>
+            {/*<SignIn /> */}
+            <Component {...pageProps} />
+            <GlobalStyle />
+          </ModalProvider>
         </AuthProvider>
       </ThemeProvider>
     </SSRProvider>

@@ -1,14 +1,21 @@
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 import withAuthentication from '../../hocs/with-authentication'
 
 // import { Container } from './styles';
 
 const DashHome: React.FC = () => {
+  const { user } = useContext(AuthContext)
+
   return (
     <>
-      <h1>Hello dashboard!</h1>
+      <Head>
+        <title>Toodoo ERM - Dashboard</title>
+      </Head>
+      <h1>Hello {user.name}</h1>
     </>
   )
 }

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 
 import {
@@ -14,6 +14,10 @@ import {
 import AuthBackground from '../components/AuthBackground'
 import Button from '../components/Button'
 import Input from '../components/Input'
+import withNonAuthentication from '../hocs/with-non-authentication'
+
+import { AuthContext } from '../contexts/AuthContext'
+import { ModalContext } from '../contexts/ModalContext'
 
 interface IFormData {
   email: string
@@ -24,11 +28,33 @@ interface IFormData {
 const SignIn: NextPage = () => {
   const [loading, setLoading] = useState(false)
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<IFormData>()
 
-  function handleLogin(data: IFormData) {
-    console.log(data)
+  const { signIn } = useContext(AuthContext)
+
+  const { callModal } = useContext(ModalContext)
+
+  async function handleLogin(data: IFormData) {
+    if (loading) return
     setLoading(true)
+
+    const response = await signIn(data)
+
+    if (!response) {
+      callModal(
+        <div className="modal-toodoo-container">
+          <img src="/icons/error-icon.svg" alt="Error Icon" />
+          <div className="mt-3">
+            <h4 className="modal-error-title">Parturient enim sit id cras.</h4>
+            <p className="text-muted mb-5">
+              Lorem ipsum dolor sit amet,
+              <br /> consectetur adipiscing elit. Sed.
+            </p>
+          </div>
+        </div>
+      )
+      setLoading(false)
+    }
   }
 
   return (
@@ -101,7 +127,7 @@ const SignIn: NextPage = () => {
                   </a>
                 </div>
 
-                <Button onClick={handleLogin} loading={loading}>
+                <Button type="submit" loading={loading}>
                   Entrar
                 </Button>
               </form>
@@ -118,4 +144,4 @@ const SignIn: NextPage = () => {
 
 export default SignIn
 
-// export const getServerSideProps: GetServerSideProps = withAuthentication  TODO: forceAuthRedirect (Redirect user if he is already logged in)
+export const getServerSideProps: GetServerSideProps = withNonAuthentication

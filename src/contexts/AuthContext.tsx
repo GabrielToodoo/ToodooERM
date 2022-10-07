@@ -15,7 +15,7 @@ export type IAuthenticatedUser = {
 
 type IAuthContextValues = {
   user: IAuthenticatedUser
-  signIn: (data: SignInRequestData) => Promise<void>
+  signIn: (data: SignInRequestData) => Promise<boolean>
 }
 
 export const AuthContext = createContext({} as IAuthContextValues)
@@ -28,15 +28,23 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
     if (success && user) {
       setCookie(undefined, 'ToodooERM@Token', JSON.stringify(user), {
-        maxAge: 60 * 60 * 2 // 2 hours
+        maxAge: data.remember ? 1000 * 24 * 60 * 60 : 60 * 60 * 2 // 2 hours
       })
+
+      if (data.remember) {
+        setCookie(undefined, 'ToodooERM@Credentials', JSON.stringify(data))
+      }
 
       setUser(user)
 
       api.defaults.headers['Authorization'] = `Bearer ${user.token}`
 
       Router.push('/dashboard')
+
+      return true
     }
+
+    return false
   }
 
   useEffect(() => {
