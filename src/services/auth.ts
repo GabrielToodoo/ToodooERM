@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import { IAuthenticatedUser } from '../contexts/AuthContext'
 import { getAPIClient } from './axios'
 
@@ -14,6 +15,17 @@ export interface SignInResponseData {
 
 export interface RecoverPasswordRequestData {
   email: string
+}
+
+export interface ConfirmRecoverPasswordRequest {
+  token: string | string[] | undefined
+  password: string
+  confirmPassword: string
+}
+
+export interface ConfirmRecoverPasswordResponseData {
+  success: boolean
+  error?: string
 }
 
 export async function signInRequest(
@@ -47,5 +59,29 @@ export async function requestRecoverPassword(
   } catch (err) {
     console.log(err)
     return false
+  }
+}
+
+export async function confirmResetPassword(
+  requestData: ConfirmRecoverPasswordRequest
+): Promise<ConfirmRecoverPasswordResponseData> {
+  try {
+    console.log(requestData)
+    const { status } = await getAPIClient().post(
+      '/Account/forgotpassword',
+      requestData
+    )
+
+    if (status == 200) {
+      return { success: true }
+    }
+
+    return { success: false, error: 'Ocorreu um erro inesperado.' }
+  } catch (err) {
+    return {
+      success: false,
+      error:
+        'O token de reset de senha expirou ou não é válido, por favor solicite uma nova troca de senha'
+    }
   }
 }

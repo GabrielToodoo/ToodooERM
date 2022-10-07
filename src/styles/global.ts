@@ -86,6 +86,10 @@ a {
   color: ${theme.colors.gray500}
 }
 
+.text-light-muted {
+  color: ${theme.colors.gray400}
+}
+
 .modal-header {
   border-bottom: none !important;
 }

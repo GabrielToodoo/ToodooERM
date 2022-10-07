@@ -28,7 +28,7 @@ interface IFormData {
   email: string
 }
 
-const SignIn: NextPage = () => {
+const ResetPassword: NextPage = () => {
   const [email, setEmail] = useState('')
 
   const [loading, setLoading] = useState(false)
@@ -57,7 +57,7 @@ const SignIn: NextPage = () => {
         <Modal
           title="Ocorreu um erro"
           color={theme.colors.colorError}
-          description="Verifique se a escrita do seu e-mail está correta ou tente novamente mais tarde."
+          description="Verifique se o seu endereço de e-mail está correto ou tente novamente mais tarde."
           image="/icons/error-icon.svg"
         />
       )
@@ -130,7 +130,7 @@ const SignIn: NextPage = () => {
                   loading={loading}
                   disabled={!validator.isEmail(email)}
                 >
-                  Entrar
+                  Enviar
                 </Button>
               </form>
               <HelpText>
@@ -144,6 +144,6 @@ const SignIn: NextPage = () => {
   )
 }
 
-export default SignIn
+export default ResetPassword
 
 export const getServerSideProps: GetServerSideProps = withNonAuthentication
