@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+
+import validator from 'validator'
 
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -18,6 +20,7 @@ import withNonAuthentication from '../hocs/with-non-authentication'
 
 import { AuthContext } from '../contexts/AuthContext'
 import { ModalContext } from '../contexts/ModalContext'
+import ErrorModal from '../components/ErrorModal'
 
 interface IFormData {
   email: string
@@ -26,6 +29,10 @@ interface IFormData {
 }
 
 const SignIn: NextPage = () => {
+  const [email, setEmail] = useState('')
+
+  const [password, setPassword] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   const { register, handleSubmit } = useForm<IFormData>()
@@ -42,16 +49,11 @@ const SignIn: NextPage = () => {
 
     if (!response) {
       callModal(
-        <div className="modal-toodoo-container">
-          <img src="/icons/error-icon.svg" alt="Error Icon" />
-          <div className="mt-3">
-            <h4 className="modal-error-title">Parturient enim sit id cras.</h4>
-            <p className="text-muted mb-5">
-              Lorem ipsum dolor sit amet,
-              <br /> consectetur adipiscing elit. Sed.
-            </p>
-          </div>
-        </div>
+        <ErrorModal
+          title="Erro na autenticação"
+          description="Verifique o usuário e a senha e tente novamente."
+          error
+        />
       )
       setLoading(false)
     }
@@ -97,14 +99,22 @@ const SignIn: NextPage = () => {
                   type="email"
                   placeholder="ex. johndoe@toodoo.com.br"
                   className="mb-3"
-                  registerFunction={register('email')}
+                  registerFunction={register('email', {
+                    onChange: e => {
+                      setEmail(e.target.value)
+                    }
+                  })}
                 />
                 <Input
                   label="Senha*"
                   type="password"
                   placeholder="ao menos 8 caracteres"
                   className="mb-3"
-                  registerFunction={register('password')}
+                  registerFunction={register('password', {
+                    onChange: e => {
+                      setPassword(e.target.value)
+                    }
+                  })}
                 />
 
                 <div className="d-flex align-items-center mt-4 mb-4 justify-content-between">
@@ -127,7 +137,11 @@ const SignIn: NextPage = () => {
                   </a>
                 </div>
 
-                <Button type="submit" loading={loading}>
+                <Button
+                  type="submit"
+                  loading={loading}
+                  disabled={password.length < 8 || !validator.isEmail(email)}
+                >
                   Entrar
                 </Button>
               </form>

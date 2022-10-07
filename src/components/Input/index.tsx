@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useRef } from 'react'
+import React, { InputHTMLAttributes } from 'react'
 
 import { InputContainer } from './styles'
 
@@ -13,12 +13,10 @@ const Input: React.FC<IButtonProps> = ({
   registerFunction,
   ...props
 }) => {
-  const inputRef = useRef(null)
-
   return (
     <InputContainer>
       {label}
-      <input ref={inputRef} {...props} {...registerFunction} />
+      <input {...props} {...registerFunction} />
     </InputContainer>
   )
 }
