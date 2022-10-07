@@ -94,12 +94,4 @@ a {
   border: none;
 }
 
-.modal-error-title {
-  color: ${theme.colors.colorError}
-}
-
-.modal-toodoo-container {
-  text-align: center;
-}
-
 `

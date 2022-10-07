@@ -20,7 +20,9 @@ import withNonAuthentication from '../hocs/with-non-authentication'
 
 import { AuthContext } from '../contexts/AuthContext'
 import { ModalContext } from '../contexts/ModalContext'
-import ErrorModal from '../components/ErrorModal'
+import ErrorModal from '../components/Modal'
+import Link from 'next/link'
+import theme from '../styles/theme'
 
 interface IFormData {
   email: string
@@ -51,8 +53,9 @@ const SignIn: NextPage = () => {
       callModal(
         <ErrorModal
           title="Erro na autenticação"
+          color={theme.colors.colorError}
           description="Verifique o usuário e a senha e tente novamente."
-          error
+          image="/icons/error-icon.svg"
         />
       )
       setLoading(false)
@@ -99,6 +102,8 @@ const SignIn: NextPage = () => {
                   type="email"
                   placeholder="ex. johndoe@toodoo.com.br"
                   className="mb-3"
+                  error={email.length > 0 && !validator.isEmail(email)}
+                  success={email.length > 0 && validator.isEmail(email)}
                   registerFunction={register('email', {
                     onChange: e => {
                       setEmail(e.target.value)
@@ -110,6 +115,9 @@ const SignIn: NextPage = () => {
                   type="password"
                   placeholder="ao menos 8 caracteres"
                   className="mb-3"
+                  error={password.length > 0 && password.length < 8}
+                  success={password.length >= 8}
+                  hiddenable
                   registerFunction={register('password', {
                     onChange: e => {
                       setPassword(e.target.value)
@@ -132,9 +140,9 @@ const SignIn: NextPage = () => {
                       Lembrar
                     </label>
                   </div>
-                  <a className="text-muted" href="#">
-                    Esqueceu a senha?
-                  </a>
+                  <Link href="/reset">
+                    <a className="text-muted">Esqueceu a senha?</a>
+                  </Link>
                 </div>
 
                 <Button
@@ -146,7 +154,7 @@ const SignIn: NextPage = () => {
                 </Button>
               </form>
               <HelpText>
-                Precisa de ajuda? <a href="#">Entre em contato.</a>
+                Precisa de ajuda? <Link href="#">Entre em contato.</Link>
               </HelpText>
             </FormContainer>
           </FormLogin>

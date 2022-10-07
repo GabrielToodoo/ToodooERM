@@ -12,9 +12,13 @@ interface IAuthProps {
   description?: IDescriptionProps
 }
 
-const AuthBackground: React.FC<IAuthProps> = ({ image, description }) => {
+const AuthBackground: React.FC<IAuthProps> = ({
+  image,
+  description,
+  ...props
+}) => {
   return (
-    <Background className="d-none d-lg-flex">
+    <Background className="d-none d-lg-flex" {...props}>
       {image}
       {description && (
         <Description>

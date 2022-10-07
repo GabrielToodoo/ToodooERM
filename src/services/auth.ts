@@ -12,6 +12,10 @@ export interface SignInResponseData {
   user?: IAuthenticatedUser
 }
 
+export interface RecoverPasswordRequestData {
+  email: string
+}
+
 export async function signInRequest(
   requestData: SignInRequestData
 ): Promise<SignInResponseData> {
@@ -29,4 +33,19 @@ export async function signInRequest(
     return { success: false }
   }
   return { success: false }
+}
+
+export async function requestRecoverPassword(
+  requestData: RecoverPasswordRequestData
+): Promise<boolean> {
+  try {
+    const { status } = await getAPIClient().post('/Account/forgotpassword', {
+      email: requestData.email
+    })
+
+    return status === 200
+  } catch (err) {
+    console.log(err)
+    return false
+  }
 }

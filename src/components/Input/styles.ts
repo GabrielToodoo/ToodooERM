@@ -2,48 +2,64 @@ import styled from 'styled-components'
 
 import theme from '../../styles/theme'
 
+interface InputProps {
+  error?: boolean
+  success?: boolean
+}
+
 export const InputContainer = styled.label`
+  position: relative;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   color: ${theme.colors.gray500};
 
-  input {
-    display: block;
-    width: 100%;
-    padding: 16px;
+  img {
+    position: absolute;
+    left: 92%;
+    top: 45%;
+    cursor: pointer;
+  }
+`
 
-    border: 1.5px solid ${theme.colors.gray200};
+export const InputElement = styled.input<InputProps>`
+  display: block;
+  width: 100%;
+  padding: 16px;
 
-    border-radius: 5px;
+  border: 1.5px solid
+    ${props =>
+      props.error
+        ? theme.colors.colorError
+        : props.success
+        ? theme.colors.primary400
+        : theme.colors.gray200};
 
-    transition: 0.3s;
+  border-radius: 5px;
 
-    margin-top: 8px;
+  transition: 0.3s;
 
-    &::placeholder {
-      color: ${theme.colors.gray300};
-    }
+  margin-top: 8px;
 
-    &:hover {
-      border-color: ${theme.colors.gray300};
-    }
+  &::placeholder {
+    color: ${theme.colors.gray300};
+  }
 
-    &.active {
-      border-color: ${theme.colors.primary400};
-    }
+  &:hover {
+    border-color: ${props =>
+      props.error
+        ? theme.colors.colorError
+        : props.success
+        ? theme.colors.primary400
+        : theme.colors.gray300};
+  }
 
-    &:disabled {
-      border: 1.5px solid ${theme.colors.gray300};
-      background: ${theme.colors.gray200};
-    }
+  &.active {
+    border-color: ${theme.colors.primary400};
+  }
 
-    &.error {
-      border: 1.5px solid ${theme.colors.colorError};
-    }
-
-    &.success {
-      border: 1.5px solid ${theme.colors.colorSuccess};
-    }
+  &:disabled {
+    border: 1.5px solid ${theme.colors.gray300};
+    background: ${theme.colors.gray200};
   }
 `
