@@ -2,6 +2,8 @@ import { AxiosError } from 'axios'
 import { IAuthenticatedUser } from '../contexts/AuthContext'
 import { getAPIClient } from './axios'
 
+import { api } from './api'
+
 export interface SignInRequestData {
   email: string
   password: string
@@ -38,7 +40,21 @@ export async function signInRequest(
     })
 
     if (status === 200) {
-      return { success: true, user: data }
+      api.defaults.headers['Authorization'] = `Bearer ${data.token}`
+
+      const {
+        data: { picture, corporateEmail }
+      } = await api.get(`/Employee/${data.id}`)
+
+      return {
+        success: true,
+        user: {
+          picture:
+            'https://toodoostorage.blob.core.windows.net/erm/pictures/6183f0e4956431c03d5a182e.png', // change this
+          email: corporateEmail,
+          ...data
+        }
+      }
     }
   } catch (err) {
     console.log(err)

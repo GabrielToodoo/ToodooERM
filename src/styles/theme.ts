@@ -8,6 +8,8 @@ const theme = {
     primary100: '#b4befa',
     primary50: '#f5f6ff',
 
+    dashboardBg: '#F9F9FA',
+
     gray700: '#161620',
     gray600: '#494952',
     gray500: '#606066',

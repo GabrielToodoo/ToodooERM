@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import { parseCookies } from 'nookies'
 import React, { useContext } from 'react'
+
 import { AuthContext } from '../../contexts/AuthContext'
 import withAuthentication from '../../hocs/with-authentication'
+import DashboardTemplate from '../../templates/DashboardTemplate'
 
 // import { Container } from './styles';
 
@@ -11,12 +11,10 @@ const DashHome: React.FC = () => {
   const { user } = useContext(AuthContext)
 
   return (
-    <>
-      <Head>
-        <title>Toodoo ERM - Dashboard</title>
-      </Head>
-      <h1>Hello {user.name}</h1>
-    </>
+    <DashboardTemplate title="Home" loading>
+      <h3>Olá, {user?.name?.split(' ').slice(0, 1).join(' ')}!</h3>
+      <p className="text-muted">Bem-vindo(a) de volta.</p>
+    </DashboardTemplate>
   )
 }
 

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { signInRequest, SignInRequestData } from '../services/auth'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import { api } from '../services/api'
 
@@ -10,12 +10,15 @@ export type IAuthenticatedUser = {
   id: string
   name: string
   token: string
+  picture: string
+  email: string
   profile: 'Administrator' | 'Employee'
 }
 
 type IAuthContextValues = {
   user: IAuthenticatedUser
   signIn: (data: SignInRequestData) => Promise<boolean>
+  logOut: () => void
 }
 
 export const AuthContext = createContext({} as IAuthContextValues)
@@ -23,10 +26,18 @@ export const AuthContext = createContext({} as IAuthContextValues)
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IAuthenticatedUser>({} as IAuthenticatedUser)
 
+  async function logOut() {
+    destroyCookie(null, 'ToodooERM@Token')
+    destroyCookie(null, 'ToodooERM@Credentials')
+
+    Router.push('/')
+  }
+
   async function signIn(data: SignInRequestData) {
     const { success, user } = await signInRequest(data)
 
     if (success && user) {
+      console.log(user)
       setCookie(undefined, 'ToodooERM@Token', JSON.stringify(user), {
         maxAge: data.remember ? 1000 * 24 * 60 * 60 : 60 * 60 * 2 // 2 hours
       })
@@ -36,8 +47,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
 
       setUser(user)
-
-      api.defaults.headers['Authorization'] = `Bearer ${user.token}`
 
       Router.push('/dashboard')
 
@@ -57,7 +66,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, logOut }}>
       {children}
     </AuthContext.Provider>
   )
