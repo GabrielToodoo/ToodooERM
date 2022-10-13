@@ -2,9 +2,7 @@ import React from 'react'
 
 import { Container } from './styles'
 
-type Props = {
-  children?: JSX.Element
-}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Box: React.FC<Props> = ({ children }) => {
   return <Container className="rounded bg-white">{children}</Container>

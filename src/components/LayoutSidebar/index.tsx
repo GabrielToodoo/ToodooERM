@@ -47,7 +47,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
 
       <NavBarContent>
         <nav>
-          <NavLink href="/dashboard" active>
+          <NavLink href="/dashboard" active={activeRoute === 0}>
             <svg
               width="24"
               height="24"
@@ -76,7 +76,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
 
           <div className="collapse show" id="collaboratorCollapse">
             <nav>
-              <NavLink>
+              <NavLink href="/dashboard/perfil" active={activeRoute === 1}>
                 <svg
                   width="24"
                   height="24"
@@ -95,7 +95,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
                 </svg>
                 Perfil
               </NavLink>
-              <NavLink>
+              <NavLink href="/dashboard/team" active={activeRoute === 2}>
                 <svg
                   width="24"
                   height="24"
@@ -130,7 +130,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
                 </svg>
                 Meu time
               </NavLink>
-              <NavLink>
+              <NavLink href="/dashboard/corpdata" active={activeRoute === 3}>
                 <svg
                   width="24"
                   height="24"
@@ -145,7 +145,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
                 </svg>
                 Dados corporativos
               </NavLink>
-              <NavLink>
+              <NavLink href="/dashboard/organogram" active={activeRoute === 4}>
                 <svg
                   width="24"
                   height="24"
@@ -160,7 +160,7 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
                 </svg>
                 Organograma
               </NavLink>
-              <NavLink>
+              <NavLink href="/dashboard/helpdesk" active={activeRoute === 5}>
                 <svg
                   width="24"
                   height="24"

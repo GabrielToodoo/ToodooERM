@@ -45,7 +45,7 @@ const DashboardTemplate: NextPage<IDashboardTemplate> = ({
         <div className="col-md-2 p-0">
           <LayoutSidebar activeRoute={activeRoute} />
         </div>
-        <DashboardContainer className="col-md-10" loading>
+        <DashboardContainer className="col-md-10" loading={loading}>
           {loading ? (
             <Lottie
               options={defaultOptions}
