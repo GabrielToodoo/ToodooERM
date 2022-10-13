@@ -79,8 +79,7 @@ const SignIn: NextPage = () => {
               <img
                 src="/images/login-illustration.svg"
                 alt="Login Illustration"
-                width="483"
-                height="532"
+                width="456"
               />
             }
           />
@@ -94,7 +93,7 @@ const SignIn: NextPage = () => {
                   alt="Toodoo Logo"
                 />
               </div>
-              <form onSubmit={handleSubmit(handleLogin)}>
+              <form onSubmit={handleSubmit(handleLogin)} className="mb-4">
                 <p>Seja bem-vindo!</p>
                 <h2 className="mb-4">Faça login na sua conta</h2>
                 <Input

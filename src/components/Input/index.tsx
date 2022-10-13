@@ -24,7 +24,7 @@ const Input: React.FC<IButtonProps> = ({
     <InputContainer>
       {label}
       <InputElement
-        type={hiddenable ? (hidden ? 'password' : 'text') : hidden}
+        type={hiddenable ? (hidden ? 'password' : 'text') : hidden.toString()}
         {...props}
         {...registerFunction}
       />

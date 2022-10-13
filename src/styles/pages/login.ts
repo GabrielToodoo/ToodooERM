@@ -11,7 +11,7 @@ export const Container = styled.div`
 
 export const FormLogin = styled.div`
   display: flex;
-  width: 100%;
+  flex: 1;
   padding: 6.87rem 7.31rem 6.62rem 7rem;
   background: #ffffff;
 

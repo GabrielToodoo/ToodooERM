@@ -8,7 +8,10 @@ interface INavLinkProps {
 
 export const Container = styled.nav`
   position: relative;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 272px;
   background: #ffffff;
   box-shadow: 12px 0px 20px rgba(17, 19, 28, 0.02),
     2px 0px 6px rgba(17, 19, 28, 0.02), 0px 0px 1px rgba(17, 19, 28, 0.02);
@@ -27,6 +30,8 @@ export const NavBarHeader = styled.div`
 `
 
 export const NavBarContent = styled.div`
+  flex: 1;
+  overflow: auto;
   margin-top: 30px;
 `
 
@@ -34,15 +39,15 @@ export const NavLink = styled.a<INavLinkProps>`
   display: flex;
   position: relative;
   align-items: center;
-  padding-left: 42px;
+  padding-left: 32px;
   cursor: pointer;
 
   height: 48px;
   width: 100%;
 
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 1.2;
   color: ${theme.colors.gray600};
 
   &:after {
@@ -50,7 +55,7 @@ export const NavLink = styled.a<INavLinkProps>`
     display: ${props => (props.active ? 'block' : 'none')};
     position: absolute;
     height: 100%;
-    width: 18px;
+    width: 4px;
     background: ${theme.colors.primary400};
     left: 0;
   }
@@ -95,12 +100,29 @@ export const NavCategory = styled.div`
 
 export const NavBarFooter = styled.div`
   display: flex;
-  position: absolute;
+  align-items: center;
   bottom: 0;
-  margin: 0px 16px 40px 32px;
+  padding: 24px 32px 24px 32px;
 
-  div {
-    margin-left: 15px;
+  .name {
+    max-width: 140px;
+    padding: 0 12px;
+    margin-right: auto;
+
+    strong {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    p {
+      display: block;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   strong {

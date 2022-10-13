@@ -10,7 +10,7 @@ import withAuthentication from '../hocs/with-authentication'
 
 import LayoutSidebar from '../components/LayoutSidebar'
 
-import { DashboardContainer } from './styles'
+import { DashboardContainer, Wrapper } from './styles'
 
 import animationData from '../../public/lottie/toodoo-animation.json'
 
@@ -41,11 +41,9 @@ const DashboardTemplate: NextPage<IDashboardTemplate> = ({
       <Head>
         <title>Toodoo ERM - {title}</title>
       </Head>
-      <div className="row overflow-hidden">
-        <div className="col-md-2 p-0">
-          <LayoutSidebar activeRoute={activeRoute} />
-        </div>
-        <DashboardContainer className="col-md-10" loading={loading}>
+      <Wrapper>
+        <LayoutSidebar activeRoute={activeRoute} />
+        <DashboardContainer loading={loading}>
           {loading ? (
             <Lottie
               options={defaultOptions}
@@ -58,7 +56,7 @@ const DashboardTemplate: NextPage<IDashboardTemplate> = ({
             children
           )}
         </DashboardContainer>
-      </div>
+      </Wrapper>
     </>
   )
 }

@@ -32,17 +32,12 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
         <a href="#">
           <img
             src="/icons/navigation-icon.svg"
-            height="24"
-            width="24"
+            height="20"
+            width="20"
             alt="navigation icon"
           />
         </a>
-        <img
-          src="/images/logo_toodoo.svg"
-          width="136"
-          height="28"
-          alt="toodoo logo"
-        />
+        <img src="/images/logo_toodoo.svg" width="120" alt="toodoo logo" />
       </NavBarHeader>
 
       <NavBarContent>
@@ -247,11 +242,11 @@ const LayoutSidebar: React.FC<ILayoutSidebar> = ({ activeRoute }) => {
         <img
           src={user?.picture}
           className="rounded-circle"
-          width="48"
-          height="48"
+          width="32"
+          height="32"
           alt="Avatar Image"
         />
-        <div>
+        <div className="name">
           <strong>{user?.name?.split(' ').slice(0, 3).join(' ')}</strong>
           <p className="text-muted">{user.email}</p>
         </div>

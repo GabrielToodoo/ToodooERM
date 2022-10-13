@@ -8,7 +8,8 @@ export const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 151px;
+  height: 56px;
+  width: 100%;
   border-radius: 5px;
   background: ${theme.colors.primary400};
   border: none;
