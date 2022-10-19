@@ -9,3 +9,10 @@ export async function getDashboardBirthdays(): Promise<mock.BirthDay[]> {
   // TODO: Make the real function without mock
   return new Promise(resolve => setTimeout(resolve, 1000, mock.nextBirthdays))
 }
+
+export async function getScheduledVacation(): Promise<mock.ScheduledVacation> {
+  // TODO: Make the real function without mock
+  return new Promise(resolve =>
+    setTimeout(resolve, 1000, mock.scheduledVacation)
+  )
+}

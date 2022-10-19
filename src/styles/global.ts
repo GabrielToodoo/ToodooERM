@@ -91,6 +91,10 @@ a {
   color: ${theme.colors.gray400}
 }
 
+.heading-dashboard {
+  color: ${theme.colors.primary600}
+}
+
 .modal-header {
   border-bottom: none !important;
 }

@@ -49,8 +49,7 @@ export async function signInRequest(
       return {
         success: true,
         user: {
-          picture:
-            'https://toodoostorage.blob.core.windows.net/erm/pictures/6183f0e4956431c03d5a182e.png', // change this
+          picture, // change this
           email: corporateEmail,
           ...data
         }

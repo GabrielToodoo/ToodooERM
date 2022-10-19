@@ -2,7 +2,7 @@ import React from 'react'
 
 import Lottie from 'react-lottie'
 
-import animationData from '../../../assets/lotties/toodoo-animation.json'
+import animationData from '../../assets/lotties/toodoo-animation.json'
 
 import { Container } from './styles'
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import Head from 'next/head'
 
-import Loading from './Loading'
 import Sidebar from './Sidebar'
 
 import { Wrapper, Content } from './styles'
@@ -22,18 +21,20 @@ type ContextProps = {
 const Context = React.createContext({} as ContextProps)
 
 const Dashboard = ({ title, children }: Props) => {
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
 
   return (
-    <Context.Provider value={{ isLoading, setLoading }}>
-      <Head>
-        <title>{title} - Toodoo ERM</title>
-      </Head>
-      <Wrapper>
-        <Sidebar />
-        <Content>{isLoading ? <Loading /> : children}</Content>
-      </Wrapper>
-    </Context.Provider>
+    <main>
+      <Context.Provider value={{ isLoading, setLoading }}>
+        <Head>
+          <title>{title} - Toodoo ERM</title>
+        </Head>
+        <Wrapper>
+          <Sidebar />
+          <Content>{children}</Content>
+        </Wrapper>
+      </Context.Provider>
+    </main>
   )
 }
 

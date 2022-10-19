@@ -28,7 +28,7 @@ export const newLetter: NewsLetter[] = [
   {
     title: 'Brace yourselves, dia 5 chegou, confira a lista de pagamentos.',
     picture: '/images/toodoo-avatar.png',
-    department: 'Recursos Humanos',
+    department: 'Financeiro',
     createdAt: '2022-10-12T04:01:28.000Z'
   }
 ]
