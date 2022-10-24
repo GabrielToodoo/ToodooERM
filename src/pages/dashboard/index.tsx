@@ -52,6 +52,7 @@ const Page: NextPageWithLayout = () => {
 
   async function loadDashboard() {
     try {
+      setLoading(true)
       const response = await getDashboardNews()
       setNews(response)
 
