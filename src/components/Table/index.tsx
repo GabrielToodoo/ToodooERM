@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LinkButton from '../Link'
 
 import { Container, SearchBox, TableHeader } from './styles'
 
+interface Column {
+  key: string
+  name: string
+}
+
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   mt?: string
-  columns: string[]
+  columns: Column[]
   buttonLabel: string
   icon?: JSX.Element
-  children: any
+  data: object[]
+  searchIndex: string
 }
 
 const Table: React.FC<Props> = ({
@@ -16,8 +22,12 @@ const Table: React.FC<Props> = ({
   columns,
   buttonLabel,
   icon,
-  children
+  data,
+  searchIndex
 }) => {
+  const [search, setSearch] = useState('')
+  const [resultsPerPage, setResultsPerPage] = useState(10)
+
   return (
     <Container style={{ marginTop: mt }}>
       <SearchBox>
@@ -34,35 +44,77 @@ const Table: React.FC<Props> = ({
               fill="#494952"
             />
           </svg>
-          <input type="text" name="Search" />
+          <input
+            type="text"
+            name="Search"
+            onChange={event => setSearch(event.target.value)}
+          />
         </div>
         <LinkButton href="#">
           {icon}
           {buttonLabel}
         </LinkButton>
       </SearchBox>
-      <div className="table-responsive table-wrapper">
+      <div className="table-responsive">
         <table className="table">
           <TableHeader>
             <tr>
               {columns.map(column => {
-                return <th scope="col">{column}</th>
+                return (
+                  <th>
+                    {column.name}
+                    <span className="vacation-th-icon ms-1">
+                      <i className="bi bi-caret-down-fill"></i>
+                    </span>
+                  </th>
+                )
               })}
             </tr>
           </TableHeader>
           <tbody>
-            {children}
-            {/*
-
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-
-            */}
+            {(search.length !== 0
+              ? data.filter(object => {
+                  type ObjectKey = keyof typeof object
+                  const key = searchIndex as ObjectKey
+                  return (object[key] as String)
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                })
+              : data
+            )
+              .slice(0, resultsPerPage)
+              .map(object => {
+                return (
+                  <tr>
+                    {columns.map(column => {
+                      type ObjectKey = keyof typeof object
+                      const key = column.key as ObjectKey
+                      return (
+                        <td>{object.hasOwnProperty(key) && object[key]}</td>
+                      )
+                    })}
+                  </tr>
+                )
+              })}
           </tbody>
+          <tfoot>
+            <label className="text-muted">
+              Registros por página:{' '}
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={event =>
+                  setResultsPerPage(Number(event.target.value))
+                }
+              >
+                <option value="10" selected>
+                  10
+                </option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+              </select>
+            </label>
+          </tfoot>
         </table>
       </div>
     </Container>

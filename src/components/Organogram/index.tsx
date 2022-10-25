@@ -11,6 +11,7 @@ interface OrganogramProps {
 
 const Organogram: React.FC<OrganogramProps> = ({ data }) => {
   function createTreeNode(child: OrganogramNode) {
+    // função recursiva
     return (
       <TreeNode
         label={

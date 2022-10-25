@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from 'react'
+import React, { ReactElement, useContext, useEffect, useState } from 'react'
 
 import { GetServerSideProps } from 'next'
 
@@ -35,7 +35,105 @@ const Page: NextPageWithLayout = () => {
           <h4 className="heading-dashboard">Helpdesk</h4>
           <Table
             mt="64px"
-            columns={['Título', 'Categoria', 'Data', 'Status']}
+            searchIndex="title"
+            columns={[
+              {
+                key: 'title',
+                name: 'Título'
+              },
+              {
+                key: 'category',
+                name: 'Categoria'
+              },
+              {
+                key: 'data',
+                name: 'Data'
+              },
+              {
+                key: 'status',
+                name: 'Status'
+              }
+            ]}
+            data={[
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              },
+              {
+                title: 'Contrato de Estágio',
+                category: 'Recursos Humanos',
+                data: '02 jun 2021',
+                status: <Badge type={BadgeType.WARNING}>Em andamento</Badge>
+              }
+            ]}
             buttonLabel="Nova Solicitação"
             icon={
               <svg
@@ -51,112 +149,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </svg>
             }
-          >
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.SUCCESS}>Aberto</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.ERROR}>Finalizado</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Contrato de Estágio</th>
-              <td>Recursos Humanos</td>
-              <td>02 jun 2021</td>
-              <td>
-                <Badge type={BadgeType.WARNING}>Em andamento</Badge>
-              </td>
-            </tr>
-          </Table>
+          />
         </HelpDeskContent>
       )}
     </>

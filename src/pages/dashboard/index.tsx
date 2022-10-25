@@ -1,7 +1,10 @@
 import React, { ReactElement, useContext, useEffect, useState } from 'react'
 
 import TimeAgo from 'react-timeago'
+
+//@ts-ignore
 import ptBrStrings from 'react-timeago/lib/language-strings/pt-br'
+//@ts-ignore
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
 import { GetServerSideProps } from 'next'

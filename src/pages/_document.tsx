@@ -50,11 +50,6 @@ export default class MyDocument extends Document {
             sizes="32x32"
           />
 
-          <meta name="author" content="Gabriel Costa" />
-          <meta name="copyright" content="Toodoo Software LTDA" />
-          <meta name="designer" content="Gabriel Costa" />
-          <meta name="abstract" content="Toodoo ERM - Dashboard" />
-
           <meta name="robots" content="index,nofollow" />
 
           <meta property="twitter:card" content="summary" />
@@ -97,6 +92,11 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
           />
+
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+          ></link>
         </Head>
         <body>
           <Main />
