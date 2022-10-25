@@ -160,7 +160,7 @@ export const links: Category[] = [
     childrens: [
       {
         name: 'Cadastros',
-        path: '/dashboard/records',
+        path: '/dashboard/admin/records',
         icon: (
           <svg
             width="24"
@@ -178,7 +178,7 @@ export const links: Category[] = [
       },
       {
         name: 'Promoções',
-        path: '/dashboard/promotions',
+        path: '/dashboard/admin/promotions',
         icon: (
           <svg
             width="24"
@@ -196,7 +196,7 @@ export const links: Category[] = [
       },
       {
         name: 'Helpdesk',
-        path: '/dashboard/helpdesk',
+        path: '/dashboard/admin/helpdesk',
         icon: (
           <svg
             width="24"

@@ -75,14 +75,21 @@ export const NewsBox = styled.div<NewsBoxProps>`
   }
 
   svg {
+    display: none;
     cursor: pointer;
   }
 
-  /*
-  &:last-child {
-    &:after {
-      content: '';
+  &:first-child {
+    svg {
       display: block;
+    }
+  }
+
+  &:last-child {
+    &:before {
+      /*
+      content: '';
+      //display: block;
       position: absolute;
       bottom: -13px;
       left: 20px;
@@ -95,9 +102,9 @@ export const NewsBox = styled.div<NewsBoxProps>`
 
       box-shadow: 0px 2px 4px rgba(22, 22, 32, 0.15),
         0px 0px 2px rgba(22, 22, 32, 0.12), 0px 0px 1px rgba(22, 22, 32, 0.04);
+        */
     }
   }
-  */
 `
 
 export const BirthdayDetails = styled.div`
