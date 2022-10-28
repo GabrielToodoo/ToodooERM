@@ -99,44 +99,45 @@ const Page: NextPageWithLayout = () => {
               <div className="row">
                 <div className="col-xl-9">
                   <NewsContainer>
-                    {news.map(newsLetter => {
-                      return (
-                        <NewsBox department={newsLetter.department}>
-                          <img
-                            src={newsLetter.picture}
-                            className="rounded-circle"
-                            width="58"
-                            height="58"
-                          />
-                          <div className="d-flex flex-column align-center description">
-                            <h4 className="flex-item m-0 p-0">
-                              {newsLetter.title}
-                            </h4>
-                            <p className="text-muted flex-item m-0 mt-2 p-0">
-                              <span className="badge d-inline-block">
-                                {newsLetter.department}
-                              </span>
-                              <TimeAgo
-                                date={newsLetter.createdAt}
-                                formatter={buildFormatter(ptBrStrings)}
-                              />
-                            </p>
-                          </div>
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M13.7501 5.00011L9.99956 8.74978L6.24989 5.00011L5 6.25L8.74967 9.99967L5 13.7493L6.24989 14.9992L9.99956 11.2496L13.7501 14.9992L15 13.7493L11.2503 9.99967L15 6.25L13.7501 5.00011Z"
-                              fill="#939399"
+                    {news.map(newsLetter => (
+                      <NewsBox
+                        key={newsLetter.title}
+                        department={newsLetter.department}
+                      >
+                        <img
+                          src={newsLetter.picture}
+                          className="rounded-circle"
+                          width="58"
+                          height="58"
+                        />
+                        <div className="d-flex flex-column align-center description">
+                          <h4 className="flex-item m-0 p-0">
+                            {newsLetter.title}
+                          </h4>
+                          <p className="text-muted flex-item m-0 mt-2 p-0">
+                            <span className="badge d-inline-block">
+                              {newsLetter.department}
+                            </span>
+                            <TimeAgo
+                              date={newsLetter.createdAt}
+                              formatter={buildFormatter(ptBrStrings)}
                             />
-                          </svg>
-                        </NewsBox>
-                      )
-                    })}
+                          </p>
+                        </div>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M13.7501 5.00011L9.99956 8.74978L6.24989 5.00011L5 6.25L8.74967 9.99967L5 13.7493L6.24989 14.9992L9.99956 11.2496L13.7501 14.9992L15 13.7493L11.2503 9.99967L15 6.25L13.7501 5.00011Z"
+                            fill="#939399"
+                          />
+                        </svg>
+                      </NewsBox>
+                    ))}
                   </NewsContainer>
                   <Box mt="24px">
                     <VacationHeader>

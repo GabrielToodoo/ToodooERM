@@ -11,4 +11,6 @@ export const Content = styled.div`
   flex: 1;
   padding: 40px 72px;
   background-color: #f9f9fa;
+  max-height: 100vh;
+  overflow-y: auto;
 `

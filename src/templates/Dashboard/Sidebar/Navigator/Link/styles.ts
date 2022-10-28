@@ -7,6 +7,8 @@ interface WrapperProps {
 }
 
 export const Wrapper = styled.a<WrapperProps>`
+  position: relative;
+
   display: flex;
   flex-direction: row;
   align-items: center;

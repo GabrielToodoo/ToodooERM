@@ -23,19 +23,23 @@ const Page: NextPageWithLayout = () => {
       {
         Header: 'Título',
         accessor: 'title',
+        width: 80,
         Cell: ({ value }: any) => <b>{value}</b>
       },
       {
         Header: 'Categoria',
-        accessor: 'category'
+        accessor: 'category',
+        width: 'auto'
       },
       {
         Header: 'Data',
-        accessor: 'data'
+        accessor: 'data',
+        width: 'auto'
       },
       {
         Header: 'Status',
         accessor: 'status',
+        width: 'auto',
         Cell: ({ value }: any) => (
           <Badge type={BadgeType.WARNING}>{value}</Badge> // Make switch case for each badge
         )
@@ -81,7 +85,7 @@ const Page: NextPageWithLayout = () => {
             }}
             data={[
               {
-                title: 'Contrato de Estágio',
+                title: 'Contrato de Estágio C',
                 category: 'Recursos Humanos',
                 data: '02 jun 2021',
                 status: 'WAITING'
@@ -186,7 +190,7 @@ export const getServerSideProps: GetServerSideProps = withAuthentication
 
 export default Page
 
-/* 
+/*
 
 Legacy Table
 

@@ -16,7 +16,7 @@ const Page: NextPageWithLayout = () => {
   const { user } = useContext(AuthContext)
 
   async function loadDashboard() {
-    //setLoading(false)
+    setLoading(false)
   }
 
   useEffect(() => {

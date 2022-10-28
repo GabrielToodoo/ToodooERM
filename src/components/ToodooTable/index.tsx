@@ -4,8 +4,13 @@ import {
   useGlobalFilter,
   useAsyncDebounce,
   useSortBy,
-  useTable
+  useTable,
+  usePagination
 } from 'react-table'
+
+import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+
 import LinkButton from '../Link'
 
 import {
@@ -17,7 +22,10 @@ import {
   TableBody,
   TableData,
   SearchWrapper,
-  TableWrapper
+  TableWrapper,
+  TableFooter,
+  TableFooterPaginator,
+  TableFooterButtons
 } from './styles'
 
 interface ButtonProps {
@@ -28,38 +36,54 @@ interface ButtonProps {
 interface ToodooTableProps {
   columns: Column<object>[]
   data: any
-  button?: ButtonProps
+
+  title?: string
   search?: boolean
+  button?: ButtonProps
+
+  withPagination?: boolean
 }
 
 const ToodooTable: React.FC<ToodooTableProps> = ({
   columns,
   data,
   button,
-  search
+  search,
+  title,
+  withPagination = true
 }) => {
-  const tableInstance = useTable(
-    {
-      columns: columns,
-      data: data
-    },
-    useGlobalFilter,
-    useSortBy
-  )
-
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     globalFilter,
-    preGlobalFilteredRows,
-    setGlobalFilter
-  } = tableInstance
+    setGlobalFilter,
+    page,
+    rows,
 
-  const count = preGlobalFilteredRows.length
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize }
+  } = useTable(
+    {
+      columns: columns,
+      data: data,
+      initialState: {
+        pageSize: 5,
+        pageIndex: 0
+      }
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  )
+
   const [value, setValue] = useState(globalFilter)
+
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined)
   }, 300)
@@ -68,6 +92,7 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
     <Wrapper>
       <SearchWrapper>
         <div>
+          {title && <span className="text-primary h6">{title}</span>}
           {search && (
             <>
               <svg
@@ -111,32 +136,12 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
                     {column.render('Header')}
-                    {column.isSortedDesc ? (
-                      <svg
-                        width="6"
-                        height="4"
-                        viewBox="0 0 6 4"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M2.61074 3.69463L0.129028 0.857941C-0.163852 0.524182 0.0741776 1.90271e-07 0.518672 1.90271e-07H5.4821C5.58158 -8.51004e-05 5.67897 0.0285055 5.76262 0.0823483C5.84627 0.136191 5.91262 0.213004 5.95374 0.303587C5.99485 0.394171 6.00898 0.494686 5.99444 0.593096C5.9799 0.691505 5.9373 0.783637 5.87174 0.858458L3.39003 3.69411C3.34146 3.74969 3.28156 3.79424 3.21436 3.82476C3.14715 3.85528 3.0742 3.87107 3.00039 3.87107C2.92658 3.87107 2.85362 3.85528 2.78641 3.82476C2.71921 3.79424 2.65931 3.74969 2.61074 3.69411V3.69463Z"
-                          fill="white"
-                        />
-                      </svg>
+                    {!column.isSorted ? (
+                      <FaSort />
+                    ) : column.isSortedDesc ? (
+                      <FaSortUp />
                     ) : (
-                      <svg
-                        width="6"
-                        height="4"
-                        viewBox="0 0 6 4"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M2.61074 0.176463L0.129028 3.01315C-0.163852 3.34691 0.0741776 3.87109 0.518672 3.87109H5.4821C5.58158 3.87118 5.67897 3.84259 5.76262 3.78875C5.84627 3.7349 5.91262 3.65809 5.95374 3.56751C5.99485 3.47692 6.00898 3.37641 5.99444 3.278C5.9799 3.17959 5.9373 3.08746 5.87174 3.01264L3.39003 0.176981C3.34146 0.121402 3.28156 0.0768558 3.21436 0.0463343C3.14715 0.0158128 3.0742 2.18375e-05 3.00039 2.18375e-05C2.92658 2.18375e-05 2.85362 0.0158128 2.78641 0.0463343C2.71921 0.0768558 2.65931 0.121402 2.61074 0.176981V0.176463Z"
-                          fill="white"
-                        />
-                      </svg>
+                      <FaSortDown />
                     )}
                   </TableHeader>
                 ))}
@@ -144,12 +149,12 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
             ))}
           </TableHead>
           <TableBody {...getTableBodyProps()}>
-            {rows.map((row, idx) => {
+            {(withPagination ? page : rows).map(row => {
               prepareRow(row)
 
               return (
                 <TableRow {...row.getRowProps()}>
-                  {row.cells.map((cell, idx) => (
+                  {row.cells.map(cell => (
                     <TableData {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </TableData>
@@ -160,6 +165,37 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
           </TableBody>
         </Table>
       </TableWrapper>
+      {withPagination && (
+        <TableFooter>
+          <TableFooterPaginator>
+            <span>Registros por página</span>
+            <select
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value))
+              }}
+            >
+              {[5, 10, 25, 50, 100].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  {pageSize}
+                </option>
+              ))}
+            </select>
+          </TableFooterPaginator>
+          <div>
+            {pageIndex > 0 ? pageIndex * pageSize : 1}-
+            {pageIndex * pageSize + page.length} de {rows.length}
+          </div>
+          <TableFooterButtons>
+            <button onClick={previousPage} disabled={!canPreviousPage}>
+              <BsChevronLeft />
+            </button>
+            <button onClick={nextPage} disabled={!canNextPage}>
+              <BsChevronRight />
+            </button>
+          </TableFooterButtons>
+        </TableFooter>
+      )}
     </Wrapper>
   )
 }

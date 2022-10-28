@@ -91,6 +91,18 @@ a {
   color: ${theme.colors.gray400}
 }
 
+.text-sm {
+  font-size: 14px;
+}
+
+.text-xs {
+  font-size: 12px;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
 .heading-dashboard {
   color: ${theme.colors.primary600}
 }
@@ -101,6 +113,17 @@ a {
 
 .modal-content {
   border: none;
+}
+
+.graph-tooltip {
+    position: relative;
+    background-color: ${theme.colors.primary500} !important;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+}
+
+.apexcharts-tooltip {
 }
 
 `
