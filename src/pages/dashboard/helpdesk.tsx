@@ -48,6 +48,102 @@ const Page: NextPageWithLayout = () => {
     []
   )
 
+  const data = useMemo(
+    () => [
+      {
+        title: 'Contrato de Estágio C',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      },
+      {
+        title: 'Contrato de Estágio',
+        category: 'Recursos Humanos',
+        data: '02 jun 2021',
+        status: 'WAITING'
+      }
+    ],
+    []
+  )
+
   async function loadDashboard() {
     setLoading(false)
   }
@@ -83,98 +179,7 @@ const Page: NextPageWithLayout = () => {
                 </svg>
               )
             }}
-            data={[
-              {
-                title: 'Contrato de Estágio C',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              },
-              {
-                title: 'Contrato de Estágio',
-                category: 'Recursos Humanos',
-                data: '02 jun 2021',
-                status: 'WAITING'
-              }
-            ]}
+            data={data}
           />
         </HelpDeskContent>
       )}

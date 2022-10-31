@@ -27,6 +27,9 @@ import {
   TableFooterPaginator,
   TableFooterButtons
 } from './styles'
+import CsvDownload from 'react-json-to-csv'
+import { LinkStyle } from '../Link/styles'
+import csvDownload from 'json-to-csv-export'
 
 interface ButtonProps {
   buttonLabel: string
@@ -40,6 +43,8 @@ interface ToodooTableProps {
   title?: string
   search?: boolean
   button?: ButtonProps
+  csvData?: any
+  onSubmit?: () => any
 
   withPagination?: boolean
 }
@@ -50,7 +55,9 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
   button,
   search,
   title,
-  withPagination = true
+  withPagination = true,
+  csvData,
+  onSubmit
 }) => {
   const {
     getTableProps,
@@ -120,7 +127,17 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
           )}
         </div>
         {button && (
-          <LinkButton href="#">
+          <LinkButton
+            href="#"
+            onClick={
+              csvData
+                ? event => {
+                    event.preventDefault()
+                    csvDownload({ data: csvData, filename: 'tabela.csv' })
+                  }
+                : onSubmit
+            }
+          >
             {button.buttonIcon && button.buttonIcon}
             {button.buttonLabel}
           </LinkButton>
