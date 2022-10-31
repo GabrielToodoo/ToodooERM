@@ -1,8 +1,16 @@
-import React, { ReactElement, useContext, useEffect, useMemo } from 'react'
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 import { GetServerSideProps } from 'next'
+import { getTeamMembers, TeamData } from '../../services/dash'
 
 import { AuthContext } from '../../contexts/AuthContext'
+import { ModalContext } from '../../contexts/ModalContext'
 
 import Dashboard, { useLayout } from '../../templates/Dashboard'
 
@@ -11,68 +19,32 @@ import { NextPageWithLayout } from '../_app'
 import withAuthentication from '../../hocs/with-authentication'
 import Loading from '../../components/Loading'
 import ToodooTable from '../../components/ToodooTable'
-
-interface TeamMember {
-  name: string
-  picture: string
-}
-
-interface TeamData {
-  collaborator: TeamMember
-  position: string
-  city: string
-  squad: string
-}
+import Modal from '../../components/Modal'
+import theme from '../../styles/theme'
 
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
+  const { callModal } = useContext(ModalContext)
+
+  const [data, setData] = useState<TeamData[]>([])
 
   async function loadDashboard() {
+    try {
+      const teamData = await getTeamMembers()
+      setData(teamData)
+    } catch (err) {
+      callModal(
+        <Modal
+          title="Ocorreu um erro"
+          color={theme.colors.colorError}
+          description="Ocorreu um erro ao tentar buscar os usuários."
+          image="/icons/error-icon.svg"
+        />
+      )
+    }
     setLoading(false)
   }
-
-  const data = useMemo<TeamData[]>(
-    () => [
-      {
-        collaborator: {
-          name: 'Aline Santesso',
-          picture: 'https://xsgames.co/randomusers/assets/avatars/female/77.jpg'
-        },
-        position: 'CSO',
-        city: 'São Paulo',
-        squad: 'AL5'
-      },
-      {
-        collaborator: {
-          name: 'Ana Luiza Terra',
-          picture: 'https://xsgames.co/randomusers/assets/avatars/female/17.jpg'
-        },
-        position: 'Intern',
-        city: 'Itajubá',
-        squad: 'Toodoo ERM'
-      },
-      {
-        collaborator: {
-          name: 'Andréa Dalbao',
-          picture: 'https://xsgames.co/randomusers/assets/avatars/female/27.jpg'
-        },
-        position: 'Head Business Partner',
-        city: 'São Paulo',
-        squad: 'Human Resources'
-      },
-      {
-        collaborator: {
-          name: 'Caroline Fonseca',
-          picture: 'https://xsgames.co/randomusers/assets/avatars/female/37.jpg'
-        },
-        position: 'Trainee',
-        city: 'Minas Gerais',
-        squad: 'Toodoo University'
-      }
-    ],
-    []
-  )
 
   const columns = useMemo(
     () => [
