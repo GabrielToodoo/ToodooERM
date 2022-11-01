@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <Wrapper>
-      <Avatar src={user?.picture} />
+      <Avatar src={user?.picture ?? '/images/no-photo.png'} />
       <Profile>
         <strong>{user?.name?.split(' ').slice(0, 3).join(' ')}</strong>
         <p className="text-muted">{user ? user.email : ''}</p>
