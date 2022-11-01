@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Tree, TreeNode } from 'react-organizational-chart'
-import { OrganogramNode } from '../../mock/dash-organogram'
+import { OrganogramNode } from '../../mock/types/dash-organogram'
 
 import { StyledNode } from './styles'
 

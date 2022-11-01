@@ -1,4 +1,7 @@
 import * as types from './types/dash'
+import * as homeTypes from '../mock/types/dash-home'
+import * as organogramTypes from '../mock/types/dash-organogram'
+
 import * as home from '../mock/dash-home'
 import * as organogram from '../mock/dash-organogram'
 
@@ -7,12 +10,12 @@ import { CorpInfo } from '../pages/dashboard/corp'
 import { formatDate } from '../helpers/date-utils'
 import { getAPIClient } from './axios'
 
-export async function getDashboardNews(): Promise<home.NewsLetter[]> {
+export async function getDashboardNews(): Promise<homeTypes.NewsLetter[]> {
   // TODO: Make the real function without mock
   return new Promise(resolve => setTimeout(resolve, 1000, home.newLetter))
 }
 
-export async function getDashboardBirthdays(): Promise<home.BirthDay[]> {
+export async function getDashboardBirthdays(): Promise<homeTypes.BirthDay[]> {
   try {
     const { data, status }: { data: types.EmployeeInfo[]; status: number } =
       await getAPIClient().get(`/Employee/birthdayOfTheMonth`)
@@ -57,7 +60,7 @@ export async function getCorpData(employeeId: string): Promise<CorpInfo> {
   return {} as CorpInfo
 }
 
-export async function getScheduledVacation(): Promise<home.ScheduledVacation> {
+export async function getScheduledVacation(): Promise<homeTypes.ScheduledVacation> {
   // TODO: Make the real function without mock
   return new Promise(resolve =>
     setTimeout(resolve, 1000, home.scheduledVacation)
@@ -66,14 +69,14 @@ export async function getScheduledVacation(): Promise<home.ScheduledVacation> {
 
 /* ORGANOGRAM PROMISES */
 
-export async function getMyTeamOrganogram(): Promise<organogram.OrganogramNode> {
+export async function getMyTeamOrganogram(): Promise<organogramTypes.OrganogramNode> {
   // TODO: Make the real function without mock
   return new Promise(resolve =>
     setTimeout(resolve, 1000, organogram.organogramMyTeam)
   )
 }
 
-export async function getGeneralOrganogram(): Promise<organogram.OrganogramNode> {
+export async function getGeneralOrganogram(): Promise<organogramTypes.OrganogramNode> {
   // TODO: Make the real function without mock
   return new Promise(resolve =>
     setTimeout(resolve, 1000, organogram.organogramGeneral)
