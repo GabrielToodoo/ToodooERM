@@ -20,7 +20,11 @@ import Box from '../../components/Box'
 import Loading from '../../components/Loading'
 import Modal from '../../components/Modal'
 
-import { BirthDay, NewsLetter, ScheduledVacation } from '../../mock/dash-home'
+import {
+  BirthDay,
+  NewsLetter,
+  ScheduledVacation
+} from '../../mock/types/dash-home'
 
 import {
   getDashboardBirthdays,
