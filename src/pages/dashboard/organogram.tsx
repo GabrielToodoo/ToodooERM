@@ -4,7 +4,6 @@ import { GetServerSideProps } from 'next'
 
 import dynamic from 'next/dynamic'
 
-import { AuthContext } from '../../contexts/AuthContext'
 import { ModalContext } from '../../contexts/ModalContext'
 
 import Dashboard, { useLayout } from '../../templates/Dashboard'
@@ -13,7 +12,6 @@ import { NextPageWithLayout } from '../_app'
 
 import withAuthentication from '../../hocs/with-authentication'
 import { getMyTeamOrganogram, getGeneralOrganogram } from '../../services/dash'
-import { OrganogramNode } from '../../mock/dash-organogram'
 
 import Loading from '../../components/Loading'
 import Modal from '../../components/Modal'
@@ -24,6 +22,8 @@ import {
   OrganogramContainer,
   Wrapper
 } from '../../styles/pages/Dashboard/organogram'
+
+import { OrganogramNode } from '../../mock/types/dash-organogram'
 
 enum OrganogramType {
   MY_TEAM,
