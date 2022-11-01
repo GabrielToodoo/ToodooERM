@@ -1,15 +1,6 @@
-export interface OrganogramPerson {
-  picture: string
-  name: string
-  role: string
-}
+import * as types from './types/dash-organogram'
 
-export interface OrganogramNode {
-  person: OrganogramPerson
-  childrens?: OrganogramNode[]
-}
-
-export const organogramMyTeam: OrganogramNode = {
+export const organogramMyTeam: types.OrganogramNode = {
   person: {
     picture: 'https://i.imgur.com/mrGqL0S.png',
     name: 'Flávio Teste',
@@ -94,7 +85,7 @@ export const organogramMyTeam: OrganogramNode = {
   ]
 }
 
-export const organogramGeneral: OrganogramNode = {
+export const organogramGeneral: types.OrganogramNode = {
   person: {
     picture: 'https://i.imgur.com/mrGqL0S.png',
     name: 'Flávio Teste',

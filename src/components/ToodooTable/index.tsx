@@ -27,8 +27,6 @@ import {
   TableFooterPaginator,
   TableFooterButtons
 } from './styles'
-import CsvDownload from 'react-json-to-csv'
-import { LinkStyle } from '../Link/styles'
 import csvDownload from 'json-to-csv-export'
 
 interface ButtonProps {

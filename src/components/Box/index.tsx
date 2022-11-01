@@ -6,9 +6,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   mt?: string
 }
 
-const Box: React.FC<Props> = ({ children, mt }) => {
+const Box: React.FC<Props> = ({ children, mt, ...props }) => {
   return (
-    <Container className="rounded bg-white" style={{ marginTop: mt }}>
+    <Container
+      className="rounded bg-white"
+      style={{ marginTop: mt }}
+      {...props}
+    >
       {children}
     </Container>
   )

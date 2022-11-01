@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 
 import { GetServerSideProps } from 'next'
-import { getTeamMembers, TeamData } from '../../services/dash'
+import { getTeamMembers, TeamData, TeamMember } from '../../services/dash'
 
 import { AuthContext } from '../../contexts/AuthContext'
 import { ModalContext } from '../../contexts/ModalContext'
@@ -30,6 +30,7 @@ const Page: NextPageWithLayout = () => {
   const [data, setData] = useState<TeamData[]>([])
 
   async function loadDashboard() {
+    setLoading(true)
     try {
       const teamData = await getTeamMembers()
       setData(teamData)

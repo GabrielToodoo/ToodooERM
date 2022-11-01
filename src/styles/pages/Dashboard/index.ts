@@ -6,6 +6,13 @@ interface NewsBoxProps {
   department: 'Recursos Humanos' | 'Financeiro'
 }
 
+export const DashboardWrapper = styled.div`
+  .birthday-box {
+    height: 100%;
+    overflow-y: scroll;
+  }
+`
+
 export const NewsTitle = styled.h5`
   font-size: 14px;
   letter-spacing: 0.5px;

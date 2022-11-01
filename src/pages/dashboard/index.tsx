@@ -36,7 +36,8 @@ import {
   NewsContainer,
   NewsTitle,
   VacationContainer,
-  VacationHeader
+  VacationHeader,
+  DashboardWrapper
 } from '../../styles/pages/Dashboard'
 import LinkButton from '../../components/Link'
 
@@ -86,7 +87,7 @@ const Page: NextPageWithLayout = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <>
+        <DashboardWrapper>
           <div className="d-flex flex-column">
             <div className="col-md-3 w-100">
               <h3>Olá, {user?.name?.split(' ').slice(0, 1).join(' ')}!</h3>
@@ -150,14 +151,14 @@ const Page: NextPageWithLayout = () => {
                         <h2>{scheduledVacation?.startAt}</h2>
                       </div>
                       <div className="col-6">
-                        <strong>INÍCIO PREVISTO</strong>
+                        <strong>FIM PREVISTO</strong>
                         <h2>{scheduledVacation?.endsAt}</h2>
                       </div>
                     </VacationContainer>
                   </Box>
                 </div>
                 <div className="col-xl-3">
-                  <Box>
+                  <Box className="rounded bg-white birthday-box">
                     <h5>Próximos aniversários</h5>
                     <div className="mt-3">
                       {birthdays.slice(0, 7).map(birthDay => {
@@ -183,7 +184,7 @@ const Page: NextPageWithLayout = () => {
               </div>
             </div>
           </div>
-        </>
+        </DashboardWrapper>
       )}
     </>
   )

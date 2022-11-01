@@ -1,6 +1,14 @@
-import React, { ReactElement, useContext, useEffect, useMemo } from 'react'
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 import { GetServerSideProps } from 'next'
+
+import { nFormatter } from '../../helpers/currency-utils'
 
 import { AuthContext } from '../../contexts/AuthContext'
 
@@ -19,33 +27,30 @@ import {
 } from '../../styles/pages/Dashboard/corp'
 import dynamic from 'next/dynamic'
 
+import { Benefit, SalaryHistory, Vacation } from '../../services/types/dash'
+import { getCorpData } from '../../services/dash'
+import { formatDate } from '../../helpers/date-utils'
+
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
+
+export interface RemunerationInfo {
+  currentSalary: SalaryHistory
+  salaryHistories: SalaryHistory[]
+}
+
+export interface CorpInfo {
+  vacations: Vacation[]
+  remuneration: RemunerationInfo
+  benefits: Benefit[]
+}
 
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
 
-  function nFormatter(num: number, digits: number) {
-    const lookup = [
-      { value: 1, symbol: '' },
-      { value: 1e3, symbol: 'k' },
-      { value: 1e6, symbol: 'M' },
-      { value: 1e9, symbol: 'G' },
-      { value: 1e12, symbol: 'T' },
-      { value: 1e15, symbol: 'P' },
-      { value: 1e18, symbol: 'E' }
-    ]
-    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/
-    var item = lookup
-      .slice()
-      .reverse()
-      .find(function (item) {
-        return num >= item.value
-      })
-    return item
-      ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
-      : '0'
-  }
+  const [info, setInfo] = useState<CorpInfo>({} as CorpInfo)
+
+  const [chartData, setChartData] = useState<number[]>()
 
   const chartOptions = {
     chart: {
@@ -90,13 +95,6 @@ const Page: NextPageWithLayout = () => {
     }
   }
 
-  const chartSeries = [
-    {
-      name: '$',
-      data: [2500, 3000, 3500]
-    }
-  ]
-
   const columns = useMemo(
     () => [
       {
@@ -111,7 +109,9 @@ const Page: NextPageWithLayout = () => {
         Header: 'Status',
         accessor: 'status',
         Cell: ({ value }: any) => (
-          <Badge type={BadgeType[value] as never}>{value}</Badge> // Make switch case for each badge
+          <Badge type={BadgeType[value] as never}>
+            {value == 'SUCCESS' ? 'Aprovado' : 'Em análise'}
+          </Badge>
         )
       }
     ],
@@ -119,12 +119,26 @@ const Page: NextPageWithLayout = () => {
   )
 
   async function loadDashboard() {
-    setLoading(false)
+    setLoading(true)
+
+    if (user.id) {
+      try {
+        const corpInfo = await getCorpData(user.id)
+
+        setInfo(corpInfo)
+        setChartData(
+          corpInfo.remuneration.salaryHistories.map(history => history.salary)
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
     loadDashboard()
-  }, [])
+  }, [user])
 
   return (
     <>
@@ -155,23 +169,16 @@ const Page: NextPageWithLayout = () => {
                     </svg>
                   )
                 }}
-                data={[
-                  {
-                    start: '14/05/2020',
-                    end: '24/05/2020',
-                    status: 'SUCCESS'
-                  },
-                  {
-                    start: '14/05/2020',
-                    end: '24/05/2020',
-                    status: 'WAITING'
-                  },
-                  {
-                    start: '14/05/2020',
-                    end: '24/05/2020',
-                    status: 'WAITING'
-                  }
-                ]}
+                data={
+                  info?.vacations?.map(vacation => {
+                    return {
+                      start: formatDate(vacation.dateStart, 'dd/MM/yyyy'),
+                      end: formatDate(vacation.dateStart, 'dd/MM/yyyy'),
+                      status:
+                        vacation.status == 'Pendente' ? 'WAITING' : 'SUCCESS'
+                    }
+                  }) ?? []
+                }
                 withPagination={false}
               />
               <Box mt="24px">
@@ -197,39 +204,62 @@ const Page: NextPageWithLayout = () => {
                 <div className="text-primary h6">Remuneração</div>
                 <div className="display-5 mt-3">
                   <b>
-                    <b>$3.8k</b>
+                    <b>
+                      $
+                      {nFormatter(
+                        info?.remuneration?.currentSalary?.salary ?? 0,
+                        1
+                      )}
+                    </b>
                   </b>
                 </div>
                 <div className="text-light-muted text-sm mb-4">
-                  <b className="text-primary">+18%</b> desde jun/19
+                  <b className="text-primary">
+                    +{info?.remuneration?.currentSalary?.percentage}%
+                  </b>{' '}
+                  desde{' '}
+                  {info?.remuneration?.salaryHistories.length >= 2
+                    ? formatDate(
+                        info?.remuneration?.salaryHistories[
+                          info?.remuneration?.salaryHistories.length - 2
+                        ].date,
+                        'MMM/dd'
+                      )
+                    : 'o início'}
                 </div>
                 <div className="text-xs text-primary text-bold">TIMELINE</div>
                 <VerticalTimeline>
-                  <li>
-                    <div className="tm-item">
-                      <div className="h5 text-bold">$2,5k</div>
-                      <div className="text-light-muted text-sm">jun/19</div>
-                    </div>
-                    <span className="text-primary text-sm">+0%</span>
-                  </li>
-                  <li>
-                    <div className="tm-item">
-                      <div className="h5 text-bold">$3,0k</div>
-                      <div className="text-light-muted text-sm">jan/20</div>
-                    </div>
-                    <span className="text-primary text-sm">+20%</span>
-                  </li>
-                  <li>
-                    <div className="tm-item">
-                      <div className="h5 text-bold">$3,5k</div>
-                      <div className="text-light-muted text-sm">set/20</div>
-                    </div>
-                    <span className="text-primary text-sm">+16%</span>
-                  </li>
+                  {info?.remuneration?.salaryHistories
+                    .slice(0, 3)
+                    .map(salary => {
+                      return (
+                        <li>
+                          <div className="tm-item">
+                            <div className="h5 text-bold">
+                              ${nFormatter(salary?.salary ?? 0, 1)}
+                            </div>
+                            <div className="text-light-muted text-sm">
+                              {formatDate(salary?.date, 'MMM/dd')}
+                            </div>
+                          </div>
+                          <span className="text-primary text-sm">
+                            +{salary?.percentage ?? 0}%
+                          </span>
+                        </li>
+                      )
+                    })}
                 </VerticalTimeline>
                 <ReactApexChart
                   options={chartOptions as never}
-                  series={chartSeries}
+                  series={[
+                    {
+                      name: '$',
+                      data:
+                        (chartData?.length == 1
+                          ? [0, chartData[0]]
+                          : chartData) ?? []
+                    }
+                  ]}
                   type="area"
                   height={160}
                 />

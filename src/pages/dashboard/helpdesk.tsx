@@ -90,7 +90,7 @@ const Page: NextPageWithLayout = () => {
         title: 'Contrato de Estágio',
         category: 'Recursos Humanos',
         data: '02 jun 2021',
-        status: 'WAITING'
+        status: 'FINISHED'
       },
       {
         title: 'Contrato de Estágio',

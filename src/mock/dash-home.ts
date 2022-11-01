@@ -1,11 +1,6 @@
-export interface NewsLetter {
-  title: string
-  picture: string
-  department: 'Recursos Humanos' | 'Financeiro'
-  createdAt: string
-}
+import * as types from './types/dash-home'
 
-export const newLetter: NewsLetter[] = [
+export const newLetter: types.NewsLetter[] = [
   {
     title: 'Aline Santesso requisitou 15 dias de férias.',
     picture:
@@ -33,13 +28,7 @@ export const newLetter: NewsLetter[] = [
   }
 ]
 
-export interface BirthDay {
-  name: string
-  date: string
-  picture: string
-}
-
-export const nextBirthdays: BirthDay[] = [
+export const nextBirthdays: types.BirthDay[] = [
   {
     name: 'Flávio Teste',
     date: '01 de julho',
@@ -77,12 +66,7 @@ export const nextBirthdays: BirthDay[] = [
   }
 ]
 
-export interface ScheduledVacation {
-  startAt: string
-  endsAt: string
-}
-
-export const scheduledVacation: ScheduledVacation = {
+export const scheduledVacation: types.ScheduledVacation = {
   startAt: '15 jul. 2021',
   endsAt: '30 jul. 2021'
 }
