@@ -27,6 +27,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IAuthenticatedUser>({} as IAuthenticatedUser)
 
   async function logOut() {
+    setUser({} as IAuthenticatedUser)
     destroyCookie(null, 'ToodooERM@Token')
     destroyCookie(null, 'ToodooERM@Credentials')
 
