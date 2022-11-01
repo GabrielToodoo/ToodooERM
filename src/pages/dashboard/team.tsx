@@ -7,7 +7,9 @@ import React, {
 } from 'react'
 
 import { GetServerSideProps } from 'next'
-import { getTeamMembers, TeamData, TeamMember } from '../../services/dash'
+import { getTeamMembers } from '../../services/dash'
+
+import { TeamData, TeamMember } from '../../services/types/dash'
 
 import { AuthContext } from '../../contexts/AuthContext'
 import { ModalContext } from '../../contexts/ModalContext'
