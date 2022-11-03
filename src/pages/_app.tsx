@@ -8,6 +8,7 @@ import SSRProvider from 'react-bootstrap/SSRProvider'
 
 import { AuthProvider } from '../contexts/AuthContext'
 import { ModalProvider } from '../contexts/ModalContext'
+import { GlobalLoadingProvider } from '../contexts/GlobalLoadingContext'
 
 import GlobalStyle from '../styles/global'
 import theme from '../styles/theme'
@@ -28,13 +29,14 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <SSRProvider>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <ModalProvider>
-            {/*<SignIn /> */}
-            {getLayout(<Component {...pageProps} />)}
-            <GlobalStyle />
-          </ModalProvider>
-        </AuthProvider>
+        <GlobalLoadingProvider>
+          <AuthProvider>
+            <ModalProvider>
+              {getLayout(<Component {...pageProps} />)}
+              <GlobalStyle />
+            </ModalProvider>
+          </AuthProvider>
+        </GlobalLoadingProvider>
       </ThemeProvider>
     </SSRProvider>
   )

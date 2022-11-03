@@ -123,7 +123,4 @@ a {
     border: none;
 }
 
-.apexcharts-tooltip {
-}
-
 `

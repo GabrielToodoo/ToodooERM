@@ -8,6 +8,8 @@ import {
   usePagination
 } from 'react-table'
 
+import csvDownload from 'json-to-csv-export'
+
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
@@ -27,14 +29,13 @@ import {
   TableFooterPaginator,
   TableFooterButtons
 } from './styles'
-import csvDownload from 'json-to-csv-export'
 
 interface ButtonProps {
   buttonLabel: string
   buttonIcon?: JSX.Element
 }
 
-interface ToodooTableProps {
+interface ToodooTableProps extends React.HTMLAttributes<HTMLDivElement> {
   columns: Column<object>[]
   data: any
 
@@ -55,7 +56,8 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
   title,
   withPagination = true,
   csvData,
-  onSubmit
+  onSubmit,
+  ...props
 }) => {
   const {
     getTableProps,
@@ -94,7 +96,7 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
   }, 300)
 
   return (
-    <Wrapper>
+    <Wrapper {...props}>
       <SearchWrapper>
         <div>
           {title && <span className="text-primary h6">{title}</span>}
@@ -127,14 +129,12 @@ const ToodooTable: React.FC<ToodooTableProps> = ({
         {button && (
           <LinkButton
             href="#"
-            onClick={
-              csvData
-                ? event => {
-                    event.preventDefault()
-                    csvDownload({ data: csvData, filename: 'tabela.csv' })
-                  }
-                : onSubmit
-            }
+            onClick={event => {
+              event.preventDefault()
+              if (csvData)
+                csvDownload({ data: csvData, filename: 'tabela.csv' })
+              else onSubmit!()
+            }}
           >
             {button.buttonIcon && button.buttonIcon}
             {button.buttonLabel}

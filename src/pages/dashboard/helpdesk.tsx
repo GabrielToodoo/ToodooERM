@@ -41,7 +41,21 @@ const Page: NextPageWithLayout = () => {
         accessor: 'status',
         width: 'auto',
         Cell: ({ value }: any) => (
-          <Badge type={BadgeType.WARNING}>{value}</Badge> // Make switch case for each badge
+          <Badge
+            type={
+              value === 'WAITING'
+                ? BadgeType.WARNING
+                : value === 'FINISHED'
+                ? BadgeType.ERROR
+                : BadgeType.SUCCESS
+            }
+          >
+            {value === 'WAITING'
+              ? 'Em andamento'
+              : value === 'FINISHED'
+              ? 'Finalizado'
+              : 'Aberto'}
+          </Badge> // Make switch case for each badge
         )
       }
     ],
@@ -51,16 +65,16 @@ const Page: NextPageWithLayout = () => {
   const data = useMemo(
     () => [
       {
-        title: 'Contrato de Estágio C',
+        title: 'Contrato de Estágio',
         category: 'Recursos Humanos',
         data: '02 jun 2021',
-        status: 'WAITING'
+        status: 'SUCCESS'
       },
       {
         title: 'Contrato de Estágio',
         category: 'Recursos Humanos',
         data: '02 jun 2021',
-        status: 'WAITING'
+        status: 'FINISHED'
       },
       {
         title: 'Contrato de Estágio',
@@ -162,6 +176,7 @@ const Page: NextPageWithLayout = () => {
           <ToodooTable
             columns={columns}
             search
+            onSubmit={() => {}}
             button={{
               buttonLabel: 'Nova solicitação',
               buttonIcon: (

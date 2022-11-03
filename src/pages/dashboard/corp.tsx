@@ -23,13 +23,15 @@ import ToodooTable from '../../components/ToodooTable'
 import Badge, { BadgeType } from '../../components/Badge'
 import {
   BenefitsList,
-  VerticalTimeline
+  VerticalTimeline,
+  CorpWrapper
 } from '../../styles/pages/Dashboard/corp'
 import dynamic from 'next/dynamic'
 
 import { Benefit, SalaryHistory, Vacation } from '../../services/types/dash'
 import { getCorpData } from '../../services/dash'
 import { formatDate } from '../../helpers/date-utils'
+import { ModalContext } from '../../contexts/ModalContext'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -47,6 +49,7 @@ export interface CorpInfo {
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
+  const { callModal } = useContext(ModalContext)
 
   const [info, setInfo] = useState<CorpInfo>({} as CorpInfo)
 
@@ -136,6 +139,14 @@ const Page: NextPageWithLayout = () => {
     }
   }
 
+  function openRequestVacationModal() {
+    callModal(
+      <>
+        <h5>Solicitar férias</h5>
+      </>
+    )
+  }
+
   useEffect(() => {
     loadDashboard()
   }, [user])
@@ -147,11 +158,13 @@ const Page: NextPageWithLayout = () => {
       ) : (
         <main>
           <h4 className="heading-dashboard">Dados corporativos</h4>
-          <div className="row mt-5">
-            <div className="col-md-8">
+          <CorpWrapper className="row mt-5">
+            <div className="col-md-8 ">
               <ToodooTable
                 columns={columns}
                 title="Férias"
+                className="vacation-wrapper"
+                onSubmit={openRequestVacationModal}
                 button={{
                   buttonLabel: 'Solicitar férias',
                   buttonIcon: (
@@ -265,7 +278,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </Box>
             </div>
-          </div>
+          </CorpWrapper>
         </main>
       )}
     </>

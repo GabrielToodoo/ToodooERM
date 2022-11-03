@@ -1,8 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState, useContext } from 'react'
 import { signInRequest, SignInRequestData } from '../services/auth'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import { api } from '../services/api'
+import { GlobalLoadingContext } from './GlobalLoadingContext'
 
 type Props = { children: React.ReactNode }
 
@@ -24,14 +25,17 @@ type IAuthContextValues = {
 export const AuthContext = createContext({} as IAuthContextValues)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
+  const { setLoading } = useContext(GlobalLoadingContext)
+
   const [user, setUser] = useState<IAuthenticatedUser>({} as IAuthenticatedUser)
 
   async function logOut() {
+    setLoading(true)
     setUser({} as IAuthenticatedUser)
     destroyCookie(null, 'ToodooERM@Token')
     destroyCookie(null, 'ToodooERM@Credentials')
-
-    Router.push('/')
+    await Router.push('/')
+    setLoading(false)
   }
 
   async function signIn(data: SignInRequestData) {

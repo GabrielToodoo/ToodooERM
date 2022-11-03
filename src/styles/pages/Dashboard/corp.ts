@@ -2,6 +2,12 @@ import styled from 'styled-components'
 
 import theme from '../../theme'
 
+export const CorpWrapper = styled.div`
+  .vacation-wrapper {
+    height: 50%;
+  }
+`
+
 export const BenefitsList = styled.ul`
   padding: 0;
   margin: 0;

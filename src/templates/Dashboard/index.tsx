@@ -27,7 +27,7 @@ const Dashboard = ({ title, children }: Props) => {
     <main>
       <Context.Provider value={{ isLoading, setLoading }}>
         <Head>
-          <title>{title} - Toodoo ERM</title>
+          <title>Toodoo ERM - {title}</title>
         </Head>
         <Wrapper>
           <Sidebar />

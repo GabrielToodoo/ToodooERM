@@ -9,7 +9,6 @@ interface NewsBoxProps {
 export const DashboardWrapper = styled.div`
   .birthday-box {
     height: 100%;
-    overflow-y: scroll;
   }
 `
 
