@@ -140,11 +140,7 @@ const Page: NextPageWithLayout = () => {
   }
 
   function openRequestVacationModal() {
-    callModal(
-      <>
-        <h5>Solicitar férias</h5>
-      </>
-    )
+    callModal(<></>)
   }
 
   useEffect(() => {
