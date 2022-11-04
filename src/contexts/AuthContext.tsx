@@ -35,7 +35,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     destroyCookie(null, 'ToodooERM@Token')
     destroyCookie(null, 'ToodooERM@Credentials')
     await Router.push('/')
-    setLoading(false)
   }
 
   async function signIn(data: SignInRequestData) {

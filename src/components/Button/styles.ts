@@ -4,20 +4,26 @@ import { shade } from 'polished'
 
 import theme from '../../styles/theme'
 
-export const ButtonContainer = styled.button`
+interface ButtonContainerProps {
+  ghost?: boolean
+}
+
+export const ButtonContainer = styled.button<ButtonContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 56px;
   width: 100%;
   border-radius: 5px;
-  background: ${theme.colors.primary400};
+  background: ${props => (props.ghost ? 'none' : theme.colors.primary400)};
   border: none;
   outline: 0;
-  color: #ffffff;
-  box-shadow: 0px 16px 24px rgba(81, 104, 244, 0.2),
-    0px 2px 6px rgba(81, 104, 244, 0.12), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  color: ${props => (props.ghost ? theme.colors.colorError : '#ffffff')};
   transition: 0.3s;
+
+  ${props =>
+    !props.ghost &&
+    `
 
   &:disabled {
     background: ${theme.colors.gray300};
@@ -49,4 +55,8 @@ export const ButtonContainer = styled.button`
       background: transparent;
     }
   }
+  box-shadow: 0px 16px 24px rgba(81, 104, 244, 0.2),
+    0px 2px 6px rgba(81, 104, 244, 0.12), 0px 0px 1px rgba(0, 0, 0, 0.04);
+
+    `}
 `

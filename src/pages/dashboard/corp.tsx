@@ -32,6 +32,7 @@ import { Benefit, SalaryHistory, Vacation } from '../../services/types/dash'
 import { getCorpData } from '../../services/dash'
 import { formatDate } from '../../helpers/date-utils'
 import { ModalContext } from '../../contexts/ModalContext'
+import VacationModal from '../../components/VacationModal'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -49,7 +50,7 @@ export interface CorpInfo {
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
-  const { callModal } = useContext(ModalContext)
+  const { callModal, setCloseable } = useContext(ModalContext)
 
   const [info, setInfo] = useState<CorpInfo>({} as CorpInfo)
 
@@ -140,7 +141,8 @@ const Page: NextPageWithLayout = () => {
   }
 
   function openRequestVacationModal() {
-    callModal(<></>)
+    setCloseable(false)
+    callModal(<VacationModal />)
   }
 
   useEffect(() => {
@@ -188,7 +190,7 @@ const Page: NextPageWithLayout = () => {
                     }
                   }) ?? []
                 }
-                withPagination={false}
+                withPagination={info?.vacations?.length >= 6}
               />
               <Box mt="24px">
                 <div className="text-primary h6">Benefícios</div>

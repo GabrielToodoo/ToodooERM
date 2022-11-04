@@ -110,3 +110,21 @@ export async function getTeamMembers(): Promise<types.TeamData[]> {
     return []
   }
 }
+
+/* MODAL SUBMIT VACATION */
+
+export async function submitVacation(
+  employeeId: string,
+  data: types.VacationRequestModel
+): Promise<number> {
+  try {
+    const { status }: { status: number } = await getAPIClient().post(
+      `/Employee/${employeeId}/vacation`,
+      data
+    )
+
+    return status
+  } catch (err) {
+    return 400
+  }
+}

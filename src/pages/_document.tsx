@@ -67,7 +67,6 @@ export default class MyDocument extends Document {
           <meta property="og:url" content="https://toodooerm.com.br/" />
           <meta name="keywords" content="Toodoo, software, dashboard" />
 
-          <link rel="manifest" href="/manifest.json" />
           <meta name="msapplication-TileColor" content="#5168F4" />
           <meta
             name="msapplication-TileImage"

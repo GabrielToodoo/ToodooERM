@@ -4,7 +4,7 @@ import theme from '../../theme'
 
 export const CorpWrapper = styled.div`
   .vacation-wrapper {
-    height: 50%;
+    padding-bottom: 40px;
   }
 `
 

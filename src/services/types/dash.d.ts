@@ -56,3 +56,8 @@ export interface EmployeeUser {
   city: string
   isLeader: boolean
 }
+
+export interface VacationRequestModel {
+  dateStart: Date
+  dateEnd: Date
+}

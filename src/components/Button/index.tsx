@@ -5,6 +5,7 @@ import { ButtonContainer } from './styles'
 interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   loading?: boolean
+  ghost?: boolean
 }
 
 const Button: React.FC<IButtonProps> = ({ children, loading, ...props }) => {
