@@ -73,25 +73,51 @@ export const NewsBox = styled.div<NewsBoxProps>`
 `
 
 export const NewsContainer = styled.div`
+  position: relative;
+
   & > ${NewsBox}:last-child {
     position: relative;
     z-index: 1;
     margin-bottom: 40px;
     transform-style: preserve-3d;
+    transition: all 500ms ease;
+
+    &:hover {
+      &::before {
+        bottom: -40px;
+        transform: translateZ(-20px);
+      }
+
+      &::after {
+        transform: translateZ(-30px);
+        bottom: -50px;
+      }
+
+      margin-bottom: 70px;
+    }
 
     &::before,
     &::after {
       position: absolute;
       content: '';
+      height: 48px;
       border-radius: 0 0 4px 4px;
-      height: 8px;
       background-color: white;
       box-shadow: 0px 2px 4px rgba(22, 22, 32, 0.15),
         0px 0px 2px rgba(22, 22, 32, 0.12), 0px 0px 1px rgba(22, 22, 32, 0.04);
+      transition: bottom 600ms ease;
     }
 
     &::before {
       width: calc(100% - 24px);
+      content: 'ver mais';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: ${theme.colors.primary400};
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
       left: 12px;
       bottom: -8px;
       transform: translateZ(-1px);
