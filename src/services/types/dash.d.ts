@@ -39,8 +39,12 @@ export interface Benefit {
 export interface EmployeeInfo {
   name: string
   picture: string
+  coverImage: string
   jobTitle: string
   jobLevel: string
+  linkedIn: string
+  facebook: string
+  instagram: string
   birthday: string
   address: Address
   salaryHistories: SalaryHistory[]

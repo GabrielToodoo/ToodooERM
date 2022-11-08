@@ -60,6 +60,24 @@ export async function getCorpData(employeeId: string): Promise<CorpInfo> {
   return {} as CorpInfo
 }
 
+export async function getProfileData(
+  employeeId: string
+): Promise<types.EmployeeInfo> {
+  try {
+    const { data, status }: { data: types.EmployeeInfo; status: number } =
+      await getAPIClient().get(`/Employee/${employeeId}`)
+
+    if (status != 200) {
+      return {} as types.EmployeeInfo
+    }
+
+    return data
+  } catch (err) {
+    console.log(err)
+  }
+  return {} as types.EmployeeInfo
+}
+
 export async function getScheduledVacation(): Promise<homeTypes.ScheduledVacation> {
   // TODO: Make the real function without mock
   return new Promise(resolve =>

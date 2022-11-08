@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect } from 'react'
+import React, { ReactElement, useContext, useEffect, useState } from 'react'
 
 import { GetServerSideProps } from 'next'
 
@@ -11,20 +11,64 @@ import { NextPageWithLayout } from '../_app'
 import withAuthentication from '../../hocs/with-authentication'
 import Loading from '../../components/Loading'
 
+import { ProfilePage } from '../../styles/pages/Dashboard/profile'
+import ProfileHeader from '../../components/ProfileHeader'
+import { getProfileData } from '../../services/dash'
+import { EmployeeInfo } from '../../services/types/dash'
+
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
 
+  const [profileInfo, setProfileInfo] = useState<EmployeeInfo>(
+    {} as EmployeeInfo
+  )
+
   async function loadDashboard() {
-    setLoading(false)
+    setLoading(true)
+    if (user.id) {
+      try {
+        const profileInfo = await getProfileData(user.id)
+
+        setProfileInfo(profileInfo)
+
+        setLoading(false)
+      } catch (err) {}
+    }
   }
 
   useEffect(() => {
     setLoading(true)
     loadDashboard()
-  }, [])
+  }, [user])
 
-  return <>{isLoading ? <Loading /> : <></>}</>
+  return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ProfilePage>
+          <ProfileHeader
+            name={user.name}
+            bgPicture={
+              profileInfo.coverImage && profileInfo.coverImage.length !== 0
+                ? profileInfo.coverImage
+                : 'https://i.imgur.com/PwWQFrE.png'
+            }
+            picture={
+              user.picture && user.picture.length !== 0
+                ? user.picture
+                : '/images/no-photo.png'
+            }
+            instagramUrl={profileInfo.instagram}
+            linkedInUrl={profileInfo.linkedIn}
+            facebookUrl={profileInfo.facebook}
+          />
+          <h2>Hello world</h2>
+        </ProfilePage>
+      )}
+    </>
+  )
 }
 
 Page.getLayout = function getLayout(page: ReactElement) {
