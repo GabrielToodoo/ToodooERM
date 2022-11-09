@@ -51,6 +51,7 @@ export interface EmployeeInfo {
   vacations: Vacation[]
   benefits: Benefit[]
   teams: Team[]
+  createdAt: string
 }
 
 export interface EmployeeUser {

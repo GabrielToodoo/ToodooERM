@@ -6,29 +6,25 @@ interface IButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   icon?: React.ComponentType
   registerFunction: any
+  labelStyle: any
   error?: boolean
   success?: boolean
-  hiddenable?: boolean
 }
 
 const Input: React.FC<IButtonProps> = ({
   label,
   registerFunction,
-  hiddenable,
   type,
+  labelStyle,
   ...props
 }) => {
   const [hidden, setHidden] = useState(true)
 
   return (
-    <InputContainer>
+    <InputContainer style={labelStyle}>
       {label}
-      <InputElement
-        type={hiddenable ? (hidden ? 'password' : 'text') : hidden.toString()}
-        {...props}
-        {...registerFunction}
-      />
-      {hiddenable && (
+      <InputElement type={type} {...props} {...registerFunction} />
+      {type === 'password' && (
         <a onClick={() => setHidden(!hidden)}>
           <img
             src={hidden ? '/icons/hidden-icon.svg' : '/icons/visible-icon.svg'}

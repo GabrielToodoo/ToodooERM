@@ -3,20 +3,25 @@ import React, { ReactElement, useContext, useEffect, useMemo } from 'react'
 import { GetServerSideProps } from 'next'
 
 import { AuthContext } from '../../contexts/AuthContext'
+import { ModalContext } from '../../contexts/ModalContext'
 
 import Dashboard, { useLayout } from '../../templates/Dashboard'
 
 import { NextPageWithLayout } from '../_app'
+import { HelpDeskContent } from '../../styles/pages/Dashboard/helpdesk'
 
 import withAuthentication from '../../hocs/with-authentication'
+
 import Loading from '../../components/Loading'
-import { HelpDeskContent } from '../../styles/pages/Dashboard/helpdesk'
 import Badge, { BadgeType } from '../../components/Badge'
 import ToodooTable from '../../components/ToodooTable'
+import HelpdeskModal from '../../components/HelpdeskModal'
 
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
   const { user } = useContext(AuthContext)
+
+  const { callModal, setCloseable } = useContext(ModalContext)
 
   const columns = useMemo(
     () => [
@@ -162,6 +167,11 @@ const Page: NextPageWithLayout = () => {
     setLoading(false)
   }
 
+  function openModal() {
+    setCloseable(false)
+    callModal(<HelpdeskModal />)
+  }
+
   useEffect(() => {
     loadDashboard()
   }, [])
@@ -176,7 +186,7 @@ const Page: NextPageWithLayout = () => {
           <ToodooTable
             columns={columns}
             search
-            onSubmit={() => {}}
+            onSubmit={openModal}
             button={{
               buttonLabel: 'Nova solicitação',
               buttonIcon: (

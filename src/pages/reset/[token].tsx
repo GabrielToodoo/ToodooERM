@@ -136,7 +136,6 @@ const ConfirmPassword: NextPage = () => {
                   type="password"
                   placeholder="ao menos 8 caracteres"
                   className="mb-4"
-                  hiddenable
                   error={password.length > 0 && password.length < 8}
                   success={password.length >= 8}
                   registerFunction={register('password', {
@@ -151,7 +150,6 @@ const ConfirmPassword: NextPage = () => {
                   type="password"
                   placeholder="ao menos 8 caracteres"
                   className="mb-3"
-                  hiddenable
                   error={newPassword.length > 0 && newPassword.length < 8}
                   success={newPassword.length >= 8}
                   registerFunction={register('newPassword', {

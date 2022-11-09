@@ -82,7 +82,13 @@ const VacationModal: React.FC = () => {
           })}
         />
         <ActionsWrapper>
-          <Button ghost onClick={handleClose}>
+          <Button
+            ghost
+            onClick={e => {
+              e.preventDefault()
+              handleClose()
+            }}
+          >
             Cancelar
           </Button>
           <Button

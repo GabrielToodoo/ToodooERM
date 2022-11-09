@@ -15,6 +15,7 @@ import { ProfilePage } from '../../styles/pages/Dashboard/profile'
 import ProfileHeader from '../../components/ProfileHeader'
 import { getProfileData } from '../../services/dash'
 import { EmployeeInfo } from '../../services/types/dash'
+import ProfileContent from '../../components/ProfileContent'
 
 const Page: NextPageWithLayout = () => {
   const { isLoading, setLoading } = useLayout()
@@ -60,12 +61,15 @@ const Page: NextPageWithLayout = () => {
                 ? user.picture
                 : '/images/no-photo.png'
             }
+            createdAt={profileInfo.createdAt}
             instagramUrl={profileInfo.instagram}
             linkedInUrl={profileInfo.linkedIn}
             facebookUrl={profileInfo.facebook}
             role={`${profileInfo.jobTitle} ${profileInfo.jobLevel}`}
+            userId={user.id}
+            loadDashboard={loadDashboard}
           />
-          <h2>Hello world</h2>
+          <ProfileContent />
         </ProfilePage>
       )}
     </>

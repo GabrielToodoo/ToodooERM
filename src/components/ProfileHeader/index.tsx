@@ -1,4 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ModalContext } from '../../contexts/ModalContext'
+import {
+  submitRemoveBackgroundPhoto,
+  submitRemovePhoto
+} from '../../services/dash'
+import theme from '../../styles/theme'
+import Modal from '../Modal'
+import ProfilePictureModal from '../ProfilePicture'
 
 import {
   ProfileBackground,
@@ -19,6 +27,9 @@ interface IProfileHeaderProps {
   facebookUrl: string
   instagramUrl: string
   linkedInUrl: string
+  userId: string
+  loadDashboard: any
+  createdAt: string
 }
 
 const ProfileHeader: React.FC<IProfileHeaderProps> = ({
@@ -28,13 +39,75 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
   facebookUrl,
   instagramUrl,
   linkedInUrl,
-  role
+  role,
+  userId,
+  loadDashboard,
+  createdAt
 }) => {
+  const { callModal } = useContext(ModalContext)
+
+  async function removeProfilePhoto(event: any) {
+    event.preventDefault()
+    const response = await submitRemovePhoto(userId)
+
+    if (response == 200) {
+      await loadDashboard()
+      callModal(
+        <Modal
+          title="Foto de perfil removida"
+          color={theme.colors.primary400}
+          description="Sua foto de perfil foi removida com sucesso."
+          image="/icons/success-icon.svg"
+        />
+      )
+    } else {
+      callModal(
+        <Modal
+          title="Ocorreu um erro"
+          color={theme.colors.colorError}
+          description="Não foi possivel solicitar a remoção de sua foto de perfil, tente novamente mais tarde."
+          image="/icons/error-icon.svg"
+        />
+      )
+    }
+  }
+
+  async function removeBackgroundPhoto(event: any) {
+    event.preventDefault()
+    const response = await submitRemoveBackgroundPhoto(userId)
+
+    if (response == 200) {
+      await loadDashboard()
+      callModal(
+        <Modal
+          title="Foto de capa removida"
+          color={theme.colors.primary400}
+          description="Sua foto de capa foi removida com sucesso."
+          image="/icons/success-icon.svg"
+        />
+      )
+    } else {
+      callModal(
+        <Modal
+          title="Ocorreu um erro"
+          color={theme.colors.colorError}
+          description="Não foi possivel solicitar a remoção de sua foto de capa, tente novamente mais tarde."
+          image="/icons/error-icon.svg"
+        />
+      )
+    }
+  }
+
   return (
     <ProfileWrapper>
       <ProfileBgWrapper>
         <ProfileBackground source={bgPicture}>
-          <button className="edit-button">
+          <button
+            className="edit-button"
+            id="dopdownEditBackgroundPhoto"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             <svg
               width="20"
               height="20"
@@ -48,12 +121,69 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
               />
             </svg>
           </button>
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="dopdownEditBackgroundPhoto"
+          >
+            <li>
+              <a
+                className="dropdown-item d-flex align-items-center gap-2"
+                href="#"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.6 1.06192C3.72269 0.84108 3.9022 0.657066 4.11994 0.528947C4.33767 0.400827 4.5857 0.333261 4.83833 0.333252H7.16167C7.4143 0.333261 7.66233 0.400827 7.88006 0.528947C8.0978 0.657066 8.27731 0.84108 8.4 1.06192L8.82867 1.83325H10.0833C10.5917 1.83325 11.0792 2.03519 11.4386 2.39463C11.7981 2.75408 12 3.24159 12 3.74992V6.01459C11.3036 5.56848 10.4937 5.33198 9.66667 5.33325C9.273 5.33325 8.89133 5.38592 8.52867 5.48425C8.38059 5.04375 8.11996 4.64959 7.77262 4.34084C7.42527 4.03209 7.00327 3.81948 6.54844 3.72407C6.09361 3.62867 5.62175 3.65378 5.17961 3.79693C4.73748 3.94007 4.34043 4.19628 4.02782 4.54015C3.71521 4.88402 3.49789 5.30362 3.39741 5.75735C3.29692 6.21109 3.31676 6.6832 3.45495 7.12691C3.59315 7.57062 3.8449 7.97051 4.18525 8.28694C4.52561 8.60337 4.94275 8.82537 5.39533 8.93092C5.25719 9.74114 5.35078 10.5739 5.66533 11.3333H1.91667C1.40834 11.3333 0.920823 11.1313 0.561379 10.7719C0.201934 10.4124 0 9.92492 0 9.41659V3.74992C0 3.24159 0.201934 2.75408 0.561379 2.39463C0.920823 2.03519 1.40834 1.83325 1.91667 1.83325H3.17133L3.6 1.06192Z"
+                    fill="#3E4DAA"
+                  />
+                  <path
+                    d="M5.99997 4.5C5.54681 4.49937 5.10947 4.66659 4.77233 4.9694C4.4352 5.27221 4.22215 5.68915 4.17431 6.13978C4.12647 6.59041 4.24722 7.04279 4.51326 7.40964C4.7793 7.77649 5.17177 8.03181 5.61497 8.12634C6.00536 7.10356 6.76718 6.26568 7.7483 5.78C7.63057 5.40864 7.39766 5.0844 7.08333 4.85427C6.76899 4.62413 6.38954 4.50005 5.99997 4.5Z"
+                    fill="#3E4DAA"
+                  />
+                  <path
+                    d="M9.66667 13.3333C11.6917 13.3333 13.3333 11.6917 13.3333 9.66667C13.3333 7.64167 11.6917 6 9.66667 6C7.64167 6 6 7.64167 6 9.66667C6 11.6917 7.64167 13.3333 9.66667 13.3333ZM9.66667 7.33333C9.75507 7.33333 9.83986 7.36845 9.90237 7.43096C9.96488 7.49348 10 7.57826 10 7.66667V9.33333H11.6667C11.7551 9.33333 11.8399 9.36845 11.9024 9.43096C11.9649 9.49348 12 9.57826 12 9.66667C12 9.75507 11.9649 9.83986 11.9024 9.90237C11.8399 9.96488 11.7551 10 11.6667 10H10V11.6667C10 11.7551 9.96488 11.8399 9.90237 11.9024C9.83986 11.9649 9.75507 12 9.66667 12C9.57826 12 9.49348 11.9649 9.43096 11.9024C9.36845 11.8399 9.33333 11.7551 9.33333 11.6667V10H7.66667C7.57826 10 7.49348 9.96488 7.43096 9.90237C7.36845 9.83986 7.33333 9.75507 7.33333 9.66667C7.33333 9.57826 7.36845 9.49348 7.43096 9.43096C7.49348 9.36845 7.57826 9.33333 7.66667 9.33333H9.33333V7.66667C9.33333 7.57826 9.36845 7.49348 9.43096 7.43096C9.49348 7.36845 9.57826 7.33333 9.66667 7.33333Z"
+                    fill="#3E4DAA"
+                  />
+                </svg>
+                Carregar do dispositivo
+              </a>
+              <a
+                className="dropdown-item d-flex align-items-center gap-2"
+                href="#"
+                onClick={removeBackgroundPhoto}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.0893 1.82143H10.0089L9.76763 1.34141C9.71652 1.23879 9.63778 1.15246 9.54028 1.09215C9.44278 1.03183 9.33039 0.999922 9.21574 1H6.2817C6.16731 0.999565 6.05511 1.03136 5.95795 1.09174C5.8608 1.15212 5.78262 1.23865 5.73237 1.34141L5.49107 1.82143H2.41071C2.30179 1.82143 2.19732 1.8647 2.1203 1.94173C2.04327 2.01875 2 2.12322 2 2.23215V3.05358C2 3.1625 2.04327 3.26697 2.1203 3.34399C2.19732 3.42102 2.30179 3.46429 2.41071 3.46429H13.0893C13.1982 3.46429 13.3027 3.42102 13.3797 3.34399C13.4567 3.26697 13.5 3.1625 13.5 3.05358V2.23215C13.5 2.12322 13.4567 2.01875 13.3797 1.94173C13.3027 1.8647 13.1982 1.82143 13.0893 1.82143ZM3.36563 12.9877C3.38521 13.3005 3.52328 13.5941 3.75171 13.8087C3.98014 14.0233 4.28177 14.1428 4.5952 14.1429H10.9048C11.2182 14.1428 11.5199 14.0233 11.7483 13.8087C11.9767 13.5941 12.1148 13.3005 12.1344 12.9877L12.6786 4.28572H2.82143L3.36563 12.9877Z"
+                    fill="#EA005A"
+                  />
+                </svg>
+                Remover foto
+              </a>
+            </li>
+          </ul>
         </ProfileBackground>
       </ProfileBgWrapper>
       <ProfileContent>
         <ProfileInfo>
           <ProfilePicture source={picture}>
-            <button className="edit-button">
+            <button
+              className="edit-button"
+              id="dopdownEditProfilePhoto"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <svg
                 width="20"
                 height="20"
@@ -67,11 +197,67 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
                 />
               </svg>
             </button>
+            <ul
+              className="dropdown-menu"
+              aria-labelledby="dopdownEditProfilePhoto"
+            >
+              <li>
+                <a
+                  className="dropdown-item d-flex align-items-center gap-2"
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault()
+                    callModal(<ProfilePictureModal />)
+                  }}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.6 1.06192C3.72269 0.84108 3.9022 0.657066 4.11994 0.528947C4.33767 0.400827 4.5857 0.333261 4.83833 0.333252H7.16167C7.4143 0.333261 7.66233 0.400827 7.88006 0.528947C8.0978 0.657066 8.27731 0.84108 8.4 1.06192L8.82867 1.83325H10.0833C10.5917 1.83325 11.0792 2.03519 11.4386 2.39463C11.7981 2.75408 12 3.24159 12 3.74992V6.01459C11.3036 5.56848 10.4937 5.33198 9.66667 5.33325C9.273 5.33325 8.89133 5.38592 8.52867 5.48425C8.38059 5.04375 8.11996 4.64959 7.77262 4.34084C7.42527 4.03209 7.00327 3.81948 6.54844 3.72407C6.09361 3.62867 5.62175 3.65378 5.17961 3.79693C4.73748 3.94007 4.34043 4.19628 4.02782 4.54015C3.71521 4.88402 3.49789 5.30362 3.39741 5.75735C3.29692 6.21109 3.31676 6.6832 3.45495 7.12691C3.59315 7.57062 3.8449 7.97051 4.18525 8.28694C4.52561 8.60337 4.94275 8.82537 5.39533 8.93092C5.25719 9.74114 5.35078 10.5739 5.66533 11.3333H1.91667C1.40834 11.3333 0.920823 11.1313 0.561379 10.7719C0.201934 10.4124 0 9.92492 0 9.41659V3.74992C0 3.24159 0.201934 2.75408 0.561379 2.39463C0.920823 2.03519 1.40834 1.83325 1.91667 1.83325H3.17133L3.6 1.06192Z"
+                      fill="#3E4DAA"
+                    />
+                    <path
+                      d="M5.99997 4.5C5.54681 4.49937 5.10947 4.66659 4.77233 4.9694C4.4352 5.27221 4.22215 5.68915 4.17431 6.13978C4.12647 6.59041 4.24722 7.04279 4.51326 7.40964C4.7793 7.77649 5.17177 8.03181 5.61497 8.12634C6.00536 7.10356 6.76718 6.26568 7.7483 5.78C7.63057 5.40864 7.39766 5.0844 7.08333 4.85427C6.76899 4.62413 6.38954 4.50005 5.99997 4.5Z"
+                      fill="#3E4DAA"
+                    />
+                    <path
+                      d="M9.66667 13.3333C11.6917 13.3333 13.3333 11.6917 13.3333 9.66667C13.3333 7.64167 11.6917 6 9.66667 6C7.64167 6 6 7.64167 6 9.66667C6 11.6917 7.64167 13.3333 9.66667 13.3333ZM9.66667 7.33333C9.75507 7.33333 9.83986 7.36845 9.90237 7.43096C9.96488 7.49348 10 7.57826 10 7.66667V9.33333H11.6667C11.7551 9.33333 11.8399 9.36845 11.9024 9.43096C11.9649 9.49348 12 9.57826 12 9.66667C12 9.75507 11.9649 9.83986 11.9024 9.90237C11.8399 9.96488 11.7551 10 11.6667 10H10V11.6667C10 11.7551 9.96488 11.8399 9.90237 11.9024C9.83986 11.9649 9.75507 12 9.66667 12C9.57826 12 9.49348 11.9649 9.43096 11.9024C9.36845 11.8399 9.33333 11.7551 9.33333 11.6667V10H7.66667C7.57826 10 7.49348 9.96488 7.43096 9.90237C7.36845 9.83986 7.33333 9.75507 7.33333 9.66667C7.33333 9.57826 7.36845 9.49348 7.43096 9.43096C7.49348 9.36845 7.57826 9.33333 7.66667 9.33333H9.33333V7.66667C9.33333 7.57826 9.36845 7.49348 9.43096 7.43096C9.49348 7.36845 9.57826 7.33333 9.66667 7.33333Z"
+                      fill="#3E4DAA"
+                    />
+                  </svg>
+                  Carregar do dispositivo
+                </a>
+                <a
+                  className="dropdown-item d-flex align-items-center gap-2"
+                  href="#"
+                  onClick={removeProfilePhoto}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.0893 1.82143H10.0089L9.76763 1.34141C9.71652 1.23879 9.63778 1.15246 9.54028 1.09215C9.44278 1.03183 9.33039 0.999922 9.21574 1H6.2817C6.16731 0.999565 6.05511 1.03136 5.95795 1.09174C5.8608 1.15212 5.78262 1.23865 5.73237 1.34141L5.49107 1.82143H2.41071C2.30179 1.82143 2.19732 1.8647 2.1203 1.94173C2.04327 2.01875 2 2.12322 2 2.23215V3.05358C2 3.1625 2.04327 3.26697 2.1203 3.34399C2.19732 3.42102 2.30179 3.46429 2.41071 3.46429H13.0893C13.1982 3.46429 13.3027 3.42102 13.3797 3.34399C13.4567 3.26697 13.5 3.1625 13.5 3.05358V2.23215C13.5 2.12322 13.4567 2.01875 13.3797 1.94173C13.3027 1.8647 13.1982 1.82143 13.0893 1.82143ZM3.36563 12.9877C3.38521 13.3005 3.52328 13.5941 3.75171 13.8087C3.98014 14.0233 4.28177 14.1428 4.5952 14.1429H10.9048C11.2182 14.1428 11.5199 14.0233 11.7483 13.8087C11.9767 13.5941 12.1148 13.3005 12.1344 12.9877L12.6786 4.28572H2.82143L3.36563 12.9877Z"
+                      fill="#EA005A"
+                    />
+                  </svg>
+                  Remover foto
+                </a>
+              </li>
+            </ul>
           </ProfilePicture>
           <ProfileDescription>
             <h3>{name}</h3>
             <p>{role}</p>
-            <p>Desde 2017</p>
+            <p>Desde {new Date(createdAt).getFullYear()}</p>
           </ProfileDescription>
         </ProfileInfo>
         <ProfileSocial>

@@ -146,3 +146,29 @@ export async function submitVacation(
     return 400
   }
 }
+
+export async function submitRemovePhoto(employeeId: string): Promise<number> {
+  try {
+    const { status }: { status: number } = await getAPIClient().delete(
+      `/Employee/${employeeId}/profileImage`
+    )
+
+    return status
+  } catch (err) {
+    return 400
+  }
+}
+
+export async function submitRemoveBackgroundPhoto(
+  employeeId: string
+): Promise<number> {
+  try {
+    const { status }: { status: number } = await getAPIClient().delete(
+      `/Employee/${employeeId}/coverImage`
+    )
+
+    return status
+  } catch (err) {
+    return 400
+  }
+}

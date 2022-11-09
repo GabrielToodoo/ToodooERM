@@ -27,6 +27,8 @@ export const InputElement = styled.input<InputProps>`
   width: 100%;
   padding: 16px;
 
+  font-size: 14px;
+
   border: 1.5px solid
     ${props =>
       props.error
@@ -55,6 +57,10 @@ export const InputElement = styled.input<InputProps>`
   }
 
   &.active {
+    border-color: ${theme.colors.primary400};
+  }
+
+  &:focus {
     border-color: ${theme.colors.primary400};
   }
 
