@@ -27,7 +27,8 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
   picture,
   facebookUrl,
   instagramUrl,
-  linkedInUrl
+  linkedInUrl,
+  role
 }) => {
   return (
     <ProfileWrapper>
@@ -69,7 +70,7 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
           </ProfilePicture>
           <ProfileDescription>
             <h3>{name}</h3>
-            <p>Chief Executive Office</p>
+            <p>{role}</p>
             <p>Desde 2017</p>
           </ProfileDescription>
         </ProfileInfo>

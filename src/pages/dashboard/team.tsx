@@ -59,7 +59,11 @@ const Page: NextPageWithLayout = () => {
           <>
             <img
               className="rounded-circle"
-              src={(value as TeamMember).picture}
+              src={
+                (value as TeamMember).picture.length === 0
+                  ? '/images/no-photo.png'
+                  : (value as TeamMember).picture
+              }
               width="40"
               height="40"
               style={{ marginRight: '20px' }}
@@ -96,7 +100,6 @@ const Page: NextPageWithLayout = () => {
         Squad: data.squad
       }
     })
-    console.log(result)
 
     return result
   }

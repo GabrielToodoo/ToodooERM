@@ -63,6 +63,7 @@ const Page: NextPageWithLayout = () => {
             instagramUrl={profileInfo.instagram}
             linkedInUrl={profileInfo.linkedIn}
             facebookUrl={profileInfo.facebook}
+            role={`${profileInfo.jobTitle} ${profileInfo.jobLevel}`}
           />
           <h2>Hello world</h2>
         </ProfilePage>
