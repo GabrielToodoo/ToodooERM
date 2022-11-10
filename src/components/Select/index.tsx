@@ -1,8 +1,8 @@
-import React, { InputHTMLAttributes } from 'react'
+import React, { HTMLAttributes } from 'react'
 
 import { SelectInput, SelectWrapper } from './styles'
 
-interface ISelectProps extends InputHTMLAttributes<HTMLSelectElement> {
+interface ISelectProps extends HTMLAttributes<HTMLDivElement> {
   id: string
   label: string
   options: string[]

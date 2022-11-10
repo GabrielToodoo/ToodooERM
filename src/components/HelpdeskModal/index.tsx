@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { ModalContext } from '../../contexts/ModalContext'
 import Button from '../Button'
+import FileInput from '../FileInput'
 
 import Input from '../Input'
 import Select from '../Select'
@@ -44,9 +45,10 @@ const HelpdeskModal: React.FC = () => {
           label="Descrição*"
           style={{ resize: 'none' }}
           contentEditable
+          className="mb-3 w-100"
           placeholder="digite uma descrição para seu chamado aqui."
-          defaultText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis nibh et eget dui tortor. Sed quisque lorem dolor erat mattis sodales at nisl, eget. Lacinia dictum molestie gravida diam. Laoreet morbi eu, auctor interdum duis purus viverra. Duis sit nisl, lectus vel, nunc eu neque, tempor elit. Sed tellus enim sed tempor lorem diam. Euismod mi tincidunt sit pulvinar elementum hac proin. Porttitor mauris rhoncus quis a. Leo nisi auctor rutrum tortor donec. Ultrices nec odio ultrices turpis eu sit sed. Justo, varius enim et mauris lobortis eleifend."
         />
+        <FileInput label="Anexar (opcional)" id="file" />
         <ActionsWrapper>
           <Button
             ghost
