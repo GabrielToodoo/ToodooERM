@@ -1,42 +1,72 @@
-import React, { useMemo, useState } from 'react'
+import React, { createContext, useMemo, useState } from 'react'
 import Button from '../Button'
-import ProfileInfoPessoalSection from '../ProfileInfoPessoalSection'
+import ProfileGeneralPessoalSection from '../ProfileGeneralPessoalSection'
+
+import ProfileInfoPessoalSection, {
+  onSaveFunction as profileInfoSaveFunction
+} from '../ProfileInfoPessoalSection'
+
+import ProfilePasswordPessoalSection, {
+  onSaveFunction as profilePasswordSaveFunction
+} from '../ProfilePasswordPessoalSection'
+import ProfileProfissionalPessoalSection from '../ProfileProfissionalPessoalSection'
 
 import {
   ProfileContentWrapper,
   OptionsContainer,
   ProfileContentHeader,
-  ProfileContentSectionWrapper
+  ProfileContentSectionWrapper,
+  AlertText
 } from './styles'
 
 interface ISection {
   title: string
   component: JSX.Element
+  onSave: (employeeId: string, formData: any) => Promise<any>
 }
 
-const ProfileContent: React.FC = () => {
+interface ProfileEditProps {
+  setFormData: any
+  setButtonDisabled: any
+}
+
+interface IProfileContentProps {
+  employeeId: string
+}
+
+export const ProfileEditInfoContext = createContext({} as ProfileEditProps)
+
+const ProfileContent: React.FC<IProfileContentProps> = ({ employeeId }) => {
+  const [formData, setFormData] = useState<object>()
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
+
   const [selectedSection, setSelectedSection] = useState<ISection>({
     title: 'Info pessoal',
-    component: <ProfileInfoPessoalSection />
+    component: <ProfileInfoPessoalSection />,
+    onSave: profileInfoSaveFunction
   })
 
   const profileSections = useMemo(
     () => [
       {
         title: 'Info pessoal',
-        component: <ProfileInfoPessoalSection />
+        component: <ProfileInfoPessoalSection />,
+        onSave: profileInfoSaveFunction
       },
       {
         title: 'Profissional',
-        component: <ProfileInfoPessoalSection />
+        component: <ProfileProfissionalPessoalSection />,
+        onSave: profileInfoSaveFunction
       },
       {
         title: 'Geral',
-        component: <ProfileInfoPessoalSection />
+        component: <ProfileGeneralPessoalSection />,
+        onSave: profileInfoSaveFunction
       },
       {
         title: 'Senha',
-        component: <ProfileInfoPessoalSection />
+        component: <ProfilePasswordPessoalSection />,
+        onSave: profilePasswordSaveFunction
       }
     ],
     []
@@ -73,10 +103,24 @@ const ProfileContent: React.FC = () => {
             )
           })}
         </OptionsContainer>
-        <Button disabled>Salvar</Button>
+        <div className="d-flex align-items-center" style={{ width: '330px' }}>
+          <AlertText id="alertText"></AlertText>
+          <Button
+            onClick={() => {
+              selectedSection.onSave(employeeId, formData)
+            }}
+            disabled={buttonDisabled}
+          >
+            Salvar
+          </Button>
+        </div>
       </ProfileContentHeader>
       <ProfileContentSectionWrapper>
-        {selectedSection.component}
+        <ProfileEditInfoContext.Provider
+          value={{ setFormData, setButtonDisabled }}
+        >
+          {selectedSection.component}
+        </ProfileEditInfoContext.Provider>
       </ProfileContentSectionWrapper>
     </ProfileContentWrapper>
   )

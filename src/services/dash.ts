@@ -172,3 +172,18 @@ export async function submitRemoveBackgroundPhoto(
     return 400
   }
 }
+
+export async function submitUpdatePassword(
+  data: types.UpdatePasswordRequestModel
+): Promise<number> {
+  try {
+    const { status }: { status: number } = await getAPIClient().patch(
+      `/Employee/updatePassword`,
+      data
+    )
+
+    return status
+  } catch (err) {
+    return 400
+  }
+}

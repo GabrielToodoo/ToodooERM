@@ -66,3 +66,9 @@ export interface VacationRequestModel {
   dateStart: Date
   dateEnd: Date
 }
+
+export interface UpdatePasswordRequestModel {
+  password: string
+  newPassword: string
+  confirmNewPassword: string
+}

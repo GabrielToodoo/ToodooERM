@@ -6,8 +6,9 @@ interface IButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   icon?: React.ComponentType
   registerFunction: any
-  labelStyle: any
+  labelStyle?: any
   error?: boolean
+  errorLabel?: string
   success?: boolean
 }
 
@@ -16,6 +17,7 @@ const Input: React.FC<IButtonProps> = ({
   registerFunction,
   type,
   labelStyle,
+  errorLabel,
   ...props
 }) => {
   const [hidden, setHidden] = useState(true)
@@ -23,7 +25,12 @@ const Input: React.FC<IButtonProps> = ({
   return (
     <InputContainer style={labelStyle}>
       {label}
-      <InputElement type={type} {...props} {...registerFunction} />
+      <InputElement
+        type={!hidden ? 'text' : type}
+        errorLabel={errorLabel}
+        {...props}
+        {...registerFunction}
+      />
       {type === 'password' && (
         <a onClick={() => setHidden(!hidden)}>
           <img
@@ -31,6 +38,7 @@ const Input: React.FC<IButtonProps> = ({
           />
         </a>
       )}
+      {errorLabel && <p>{errorLabel}</p>}
     </InputContainer>
   )
 }

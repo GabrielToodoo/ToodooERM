@@ -69,7 +69,7 @@ const Page: NextPageWithLayout = () => {
             userId={user.id}
             loadDashboard={loadDashboard}
           />
-          <ProfileContent />
+          <ProfileContent employeeId={user.id} />
         </ProfilePage>
       )}
     </>

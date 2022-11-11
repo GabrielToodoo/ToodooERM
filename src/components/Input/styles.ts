@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import theme from '../../styles/theme'
 
 interface InputProps {
-  error?: boolean
+  errorLabel?: boolean
   success?: boolean
 }
 
@@ -16,9 +16,16 @@ export const InputContainer = styled.label`
 
   img {
     position: absolute;
-    left: 92%;
-    top: 45%;
+    right: 20px;
+    top: 40px;
     cursor: pointer;
+  }
+
+  p {
+    position: absolute;
+    font-size: 11px;
+    color: ${theme.colors.colorError};
+    margin-top: 4px;
   }
 `
 
@@ -31,7 +38,7 @@ export const InputElement = styled.input<InputProps>`
 
   border: 1.5px solid
     ${props =>
-      props.error
+      props.errorLabel
         ? theme.colors.colorError
         : props.success
         ? theme.colors.primary400
@@ -49,7 +56,7 @@ export const InputElement = styled.input<InputProps>`
 
   &:hover {
     border-color: ${props =>
-      props.error
+      props.errorLabel
         ? theme.colors.colorError
         : props.success
         ? theme.colors.primary400

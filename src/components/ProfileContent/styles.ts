@@ -8,6 +8,16 @@ export const ProfileContentWrapper = styled.div`
   margin-top: 46px;
 `
 
+export const AlertText = styled.span`
+  width: 300px;
+  height: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${theme.colors.primary400};
+  margin-right: 32px;
+`
+
 export const ProfileContentHeader = styled.div`
   display: flex;
   align-items: center;
