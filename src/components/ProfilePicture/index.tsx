@@ -28,13 +28,12 @@ const ProfilePictureModal: React.FC = () => {
 
   return (
     <ModalWrapper>
-      <h5>Editar foto</h5>
       <form onSubmit={handleSubmit(handlePictureChange)}>
         <ActionsWrapper>
           <Button ghost onClick={handleClose}>
             Cancelar
           </Button>
-          <Button loading={loading}>Solicitar</Button>
+          <Button loading={loading}>Salvar</Button>
         </ActionsWrapper>
       </form>
     </ModalWrapper>

@@ -44,7 +44,7 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
   loadDashboard,
   createdAt
 }) => {
-  const { callModal } = useContext(ModalContext)
+  const { callModal, setTitle } = useContext(ModalContext)
 
   async function removeProfilePhoto(event: any) {
     event.preventDefault()
@@ -207,6 +207,7 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
                   href="#"
                   onClick={e => {
                     e.preventDefault()
+                    setTitle('Editar foto')
                     callModal(<ProfilePictureModal />)
                   }}
                 >

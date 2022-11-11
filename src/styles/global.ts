@@ -107,6 +107,10 @@ a {
   color: ${theme.colors.primary600}
 }
 
+.primary-color {
+  color: ${theme.colors.primary400}
+}
+
 .modal-header {
   border-bottom: none !important;
 }
