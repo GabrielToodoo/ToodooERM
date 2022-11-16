@@ -208,7 +208,7 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = ({
                   onClick={e => {
                     e.preventDefault()
                     setTitle('Editar foto')
-                    callModal(<ProfilePictureModal />)
+                    callModal(<ProfilePictureModal pictureSrc={picture} />)
                   }}
                 >
                   <svg

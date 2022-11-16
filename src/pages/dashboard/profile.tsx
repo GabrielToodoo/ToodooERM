@@ -11,10 +11,11 @@ import { NextPageWithLayout } from '../_app'
 import withAuthentication from '../../hocs/with-authentication'
 import Loading from '../../components/Loading'
 
-import { ProfilePage } from '../../styles/pages/Dashboard/profile'
-import ProfileHeader from '../../components/ProfileHeader'
 import { getProfileData } from '../../services/dash'
 import { EmployeeInfo } from '../../services/types/dash'
+import { ProfilePage } from '../../styles/pages/Dashboard/profile'
+
+import ProfileHeader from '../../components/ProfileHeader'
 import ProfileContent from '../../components/ProfileContent'
 
 const Page: NextPageWithLayout = () => {
