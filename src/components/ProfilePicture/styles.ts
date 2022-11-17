@@ -15,6 +15,7 @@ export const ActionsWrapper = styled.div`
 `
 
 export const ProfilePictureBox = styled.div<IProfilePictureBox>`
+  position: relative;
   width: 174px;
   height: 174px;
   background: url(${props => props.source});
@@ -22,6 +23,20 @@ export const ProfilePictureBox = styled.div<IProfilePictureBox>`
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: url('/icons/camera-icon.svg');
+  }
 `
 
 export const ContentWrapper = styled.div`

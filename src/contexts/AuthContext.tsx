@@ -20,6 +20,7 @@ type IAuthContextValues = {
   user: IAuthenticatedUser
   signIn: (data: SignInRequestData) => Promise<boolean>
   logOut: () => void
+  changePicture: (pictureUrl: string) => void
 }
 
 export const AuthContext = createContext({} as IAuthContextValues)
@@ -28,6 +29,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const { setLoading } = useContext(GlobalLoadingContext)
 
   const [user, setUser] = useState<IAuthenticatedUser>({} as IAuthenticatedUser)
+
+  function changePicture(pictureUrl: string) {
+    setUser({ ...user, picture: pictureUrl })
+  }
 
   async function logOut() {
     setLoading(true)
@@ -70,7 +75,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, signIn, logOut }}>
+    <AuthContext.Provider value={{ user, signIn, logOut, changePicture }}>
       {children}
     </AuthContext.Provider>
   )
